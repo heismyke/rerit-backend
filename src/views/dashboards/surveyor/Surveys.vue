@@ -10,28 +10,27 @@ const handleLogout = () => { logout(); router.push('/') }
 
 const searchQuery = ref('')
 const filterStatus = ref('all')
+const filterPriority = ref('all')
 const currentPage = ref(1)
 const itemsPerPage = ref(5)
 
-const showAddModal = ref(false)
 const showViewModal = ref(false)
 const selectedSurvey = ref<any>(null)
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
-const newSurvey = ref({ property: '', type: 'Land Survey' })
-
 const surveys = ref([
-  { id: 'SURV-001', property: 'Plot 15, Ikoyi', type: 'Land Survey', status: 'Approved', submitted: '2024-01-10', approved: '2024-01-15' },
-  { id: 'SURV-002', property: 'Block 3, Lekki', type: 'Boundary Survey', status: 'Under Review', submitted: '2024-01-12', approved: '-' },
-  { id: 'SURV-003', property: 'Plot 88, Victoria Island', type: 'Topographic Survey', status: 'Approved', submitted: '2024-01-08', approved: '2024-01-12' },
-  { id: 'SURV-004', property: 'Block 7, Epe', type: 'Subdivision Survey', status: 'Pending', submitted: '2024-01-14', approved: '-' },
-  { id: 'SURV-005', property: '15 Admiralty Way', type: 'Construction Survey', status: 'Approved', submitted: '2024-01-05', approved: '2024-01-10' },
+  { id: 'SURV-001', property: 'Plot 8, Banana Island', owner: 'Folake Adeyemi', type: 'Property Verification', priority: 'High', status: 'Pending', assignedDate: '2024-01-15', dueDate: '2024-01-18', coordinates: '6.4281° N, 3.4219° E', description: 'Verify property exists and matches declared records. High-value property flagged for investigation.' },
+  { id: 'SURV-002', property: 'Block 12, Maitama', owner: 'Unknown Entity', type: 'Ownership Verification', priority: 'Critical', status: 'In Progress', assignedDate: '2024-01-14', dueDate: '2024-01-17', coordinates: '9.0579° N, 7.4951° E', description: 'Verify ownership claims. Property flagged for suspected tax evasion.' },
+  { id: 'SURV-003', property: 'Plot 45, Victoria Island', owner: 'Chinedu & Partners', type: 'Value Assessment', priority: 'Medium', status: 'Completed', assignedDate: '2024-01-10', dueDate: '2024-01-15', coordinates: '6.4281° N, 3.4219° E', description: 'Physical inspection for value discrepancy verification.', completedDate: '2024-01-13' },
+  { id: 'SURV-004', property: 'Estate 7, Lekki', owner: 'Global Ventures Ltd', type: 'Document Verification', priority: 'High', status: 'Pending', assignedDate: '2024-01-16', dueDate: '2024-01-19', coordinates: '6.4312° N, 3.5012° E', description: 'Verify documents submitted. Property flagged for document forgery investigation.' },
+  { id: 'SURV-005', property: 'Plot 15, Ikoyi', owner: 'Emeka Okonkwo', type: 'Routine Survey', priority: 'Low', status: 'Completed', assignedDate: '2024-01-05', dueDate: '2024-01-12', coordinates: '6.4536° N, 3.3958° E', description: 'Routine property verification survey.', completedDate: '2024-01-10' },
 ])
 
 const filteredSurveys = computed(() => surveys.value.filter(s => {
-  const matchesSearch = s.property.toLowerCase().includes(searchQuery.value.toLowerCase()) || s.id.toLowerCase().includes(searchQuery.value.toLowerCase())
+  const matchesSearch = s.property.toLowerCase().includes(searchQuery.value.toLowerCase()) || s.owner.toLowerCase().includes(searchQuery.value.toLowerCase()) || s.id.toLowerCase().includes(searchQuery.value.toLowerCase())
   const matchesStatus = filterStatus.value === 'all' || s.status === filterStatus.value
-  return matchesSearch && matchesStatus
+  const matchesPriority = filterPriority.value === 'all' || s.priority === filterPriority.value
+  return matchesSearch && matchesStatus && matchesPriority
 }))
 
 const totalPages = computed(() => Math.ceil(filteredSurveys.value.length / itemsPerPage.value))
@@ -40,10 +39,19 @@ const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) 
 
 const showToast = (message: string) => { toast.value = { show: true, message }; setTimeout(() => { toast.value.show = false }, 3000) }
 const openViewModal = (s: any) => { selectedSurvey.value = s; showViewModal.value = true }
-const handleAddSurvey = () => {
-  const newId = 'SURV-' + String(surveys.value.length + 1).padStart(3, '0')
-  surveys.value.unshift({ id: newId, ...newSurvey.value, status: 'Pending', submitted: new Date().toISOString().split('T')[0], approved: '-' })
-  showAddModal.value = false; newSurvey.value = { property: '', type: 'Land Survey' }; showToast('Survey created successfully')
+const startInspection = (s: any) => {
+  const index = surveys.value.findIndex(x => x.id === s.id)
+  if (index !== -1) surveys.value[index].status = 'In Progress'
+  showToast('Inspection started for ' + s.id)
+}
+const completeInspection = (s: any) => {
+  const index = surveys.value.findIndex(x => x.id === s.id)
+  if (index !== -1) {
+    surveys.value[index].status = 'Completed'
+    surveys.value[index].completedDate = new Date().toISOString().split('T')[0]
+  }
+  showToast('Inspection completed. Submit findings in Submissions.')
+  showViewModal.value = false
 }
 </script>
 
@@ -52,25 +60,30 @@ const handleAddSurvey = () => {
     <Sidebar v-if="selectedRole?.id" :role-id="selectedRole.id" />
     <div class="flex-1 flex flex-col">
       <header class="h-14 bg-white border-b border-[#e5e7eb] flex items-center justify-between px-6 shrink-0">
-        <div class="flex items-center gap-4"><span class="text-[#6b7280] text-sm">{{ selectedRole?.name }}</span><span class="text-[#d1d5db]">/</span><span class="text-[#1f2937] text-sm font-medium">Surveys</span></div>
+        <div class="flex items-center gap-4"><span class="text-[#6b7280] text-sm">{{ selectedRole?.name }}</span><span class="text-[#d1d5db]">/</span><span class="text-[#1f2937] text-sm font-medium">Assigned Surveys</span></div>
         <div class="flex items-center gap-4"><span class="text-[11px] text-[#9ca3af]">{{ user?.email }}</span><button @click="handleLogout" class="btn-ghost text-[11px]">Logout</button></div>
       </header>
       <main class="flex-1 p-6">
         <div class="bg-white border border-[#e5e7eb] rounded-lg">
-          <div class="px-6 py-4 border-b border-[#e5e7eb] flex items-center justify-between"><h2 class="text-[13px] font-semibold text-[#1f2937]">My Surveys</h2><button @click="showAddModal = true" class="btn-primary text-[11px]">New Survey</button></div>
-          <div class="p-4 border-b border-[#e5e7eb] flex gap-4">
-            <input v-model="searchQuery" type="text" placeholder="Search surveys..." class="input-field max-w-md" />
-            <select v-model="filterStatus" class="input-field w-48"><option value="all">All Status</option><option value="Approved">Approved</option><option value="Under Review">Under Review</option><option value="Pending">Pending</option></select>
+          <div class="px-6 py-4 border-b border-[#e5e7eb] flex items-center justify-between"><h2 class="text-[13px] font-semibold text-[#1f2937]">Assigned Surveys</h2><span class="text-[11px] text-[#6b7280]">Surveyor: {{ user?.name || 'Agent' }}</span></div>
+          <div class="p-4 border-b border-[#e5e7eb] flex gap-4 flex-wrap">
+            <input v-model="searchQuery" type="text" placeholder="Search by property, owner, or ID..." class="input-field max-w-md" />
+            <select v-model="filterStatus" class="input-field w-40"><option value="all">All Status</option><option value="Pending">Pending</option><option value="In Progress">In Progress</option><option value="Completed">Completed</option></select>
+            <select v-model="filterPriority" class="input-field w-40"><option value="all">All Priority</option><option value="Critical">Critical</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full">
-              <thead><tr><th class="table-header">Survey ID</th><th class="table-header">Property</th><th class="table-header">Type</th><th class="table-header">Status</th><th class="table-header">Submitted</th><th class="table-header">Approved</th><th class="table-header">Actions</th></tr></thead>
+              <thead><tr><th class="table-header">Survey ID</th><th class="table-header">Property</th><th class="table-header">Owner</th><th class="table-header">Type</th><th class="table-header">Priority</th><th class="table-header">Status</th><th class="table-header">Due Date</th><th class="table-header">Actions</th></tr></thead>
               <tbody class="divide-y divide-[#f3f4f6]">
                 <tr v-for="survey in paginatedSurveys" :key="survey.id" class="hover:bg-[#f9fafb]">
-                  <td class="table-cell font-medium">{{ survey.id }}</td><td class="table-cell text-[#6b7280]">{{ survey.property }}</td><td class="table-cell">{{ survey.type }}</td>
-                  <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': survey.status === 'Approved', 'bg-yellow-50 text-yellow-700': survey.status === 'Under Review', 'bg-gray-100 text-gray-600': survey.status === 'Pending'}">{{ survey.status }}</span></td>
-                  <td class="table-cell text-[#9ca3af]">{{ survey.submitted }}</td><td class="table-cell text-[#9ca3af]">{{ survey.approved }}</td>
-                  <td class="table-cell"><button @click="openViewModal(survey)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button></td>
+                  <td class="table-cell font-medium">{{ survey.id }}</td>
+                  <td class="table-cell text-[#6b7280]">{{ survey.property }}</td>
+                  <td class="table-cell">{{ survey.owner }}</td>
+                  <td class="table-cell text-[11px]">{{ survey.type }}</td>
+                  <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-red-100 text-red-700': survey.priority === 'Critical', 'bg-orange-100 text-orange-700': survey.priority === 'High', 'bg-yellow-100 text-yellow-700': survey.priority === 'Medium', 'bg-gray-100 text-gray-600': survey.priority === 'Low'}">{{ survey.priority }}</span></td>
+                  <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': survey.status === 'Completed', 'bg-blue-50 text-blue-700': survey.status === 'In Progress', 'bg-gray-100 text-gray-600': survey.status === 'Pending'}">{{ survey.status }}</span></td>
+                  <td class="table-cell text-[#9ca3af]">{{ survey.dueDate }}</td>
+                  <td class="table-cell"><button @click="openViewModal(survey)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">View Details</button></td>
                 </tr>
               </tbody>
             </table>
@@ -90,33 +103,63 @@ const handleAddSurvey = () => {
     <Teleport to="body"><div v-if="toast.show" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50">{{ toast.message }}</div></Teleport>
 
     <Teleport to="body">
-      <div v-if="showAddModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">New Survey</h3><button @click="showAddModal = false" class="text-white/80 hover:text-white">✕</button></div>
-          <div class="p-6 space-y-4">
-            <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Property Location</label><input v-model="newSurvey.property" type="text" placeholder="Enter property address" class="input-field w-full" /></div>
-            <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Survey Type</label><select v-model="newSurvey.type" class="input-field w-full"><option>Land Survey</option><option>Boundary Survey</option><option>Topographic Survey</option><option>Subdivision Survey</option><option>Construction Survey</option></select></div>
+      <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl my-8">
+          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center">
+            <h3 class="text-base font-semibold text-white">Survey Assignment Details</h3>
+            <button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showAddModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleAddSurvey" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Create Survey</button></div>
-        </div>
-      </div>
-    </Teleport>
-
-    <Teleport to="body">
-      <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Survey Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
-          <div class="p-6 space-y-4">
+          <div class="p-6 space-y-6">
             <div class="grid grid-cols-2 gap-4">
-              <div><p class="text-[11px] text-gray-500">Survey ID</p><p class="text-[13px] font-medium">{{ selectedSurvey?.id }}</p></div>
-              <div><p class="text-[11px] text-gray-500">Status</p><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': selectedSurvey?.status === 'Approved', 'bg-yellow-50 text-yellow-700': selectedSurvey?.status === 'Under Review'}">{{ selectedSurvey?.status }}</span></div>
-              <div><p class="text-[11px] text-gray-500">Type</p><p class="text-[13px]">{{ selectedSurvey?.type }}</p></div>
-              <div><p class="text-[11px] text-gray-500">Submitted</p><p class="text-[13px]">{{ selectedSurvey?.submitted }}</p></div>
+              <div class="bg-[#EEEEEE] rounded-lg p-4">
+                <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">SURVEY INFO</h4>
+                <div class="space-y-3">
+                  <div><p class="text-[10px] text-[#9ca3af]">Survey ID</p><p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedSurvey?.id }}</p></div>
+                  <div><p class="text-[10px] text-[#9ca3af]">Survey Type</p><p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedSurvey?.type }}</p></div>
+                  <div><p class="text-[10px] text-[#9ca3af]">Priority</p><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-red-100 text-red-700': selectedSurvey?.priority === 'Critical', 'bg-orange-100 text-orange-700': selectedSurvey?.priority === 'High', 'bg-yellow-100 text-yellow-700': selectedSurvey?.priority === 'Medium'}">{{ selectedSurvey?.priority }}</span></div>
+                </div>
+              </div>
+              <div class="bg-[#EEEEEE] rounded-lg p-4">
+                <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">PROPERTY INFO</h4>
+                <div class="space-y-3">
+                  <div><p class="text-[10px] text-[#9ca3af]">Property</p><p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedSurvey?.property }}</p></div>
+                  <div><p class="text-[10px] text-[#9ca3af]">Owner</p><p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedSurvey?.owner }}</p></div>
+                  <div><p class="text-[10px] text-[#9ca3af]">GPS Coordinates</p><p class="text-[12px] font-semibold text-[#1f2937]">{{ selectedSurvey?.coordinates }}</p></div>
+                </div>
+              </div>
             </div>
-            <div><p class="text-[11px] text-gray-500">Property</p><p class="text-[13px]">{{ selectedSurvey?.property }}</p></div>
-            <div><p class="text-[11px] text-gray-500">Approved Date</p><p class="text-[13px]">{{ selectedSurvey?.approved }}</p></div>
+
+            <div class="bg-[#EEEEEE] rounded-lg p-4">
+              <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">ASSIGNMENT DETAILS</h4>
+              <div class="grid grid-cols-3 gap-4">
+                <div><p class="text-[10px] text-[#9ca3af]">Assigned Date</p><p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedSurvey?.assignedDate }}</p></div>
+                <div><p class="text-[10px] text-[#9ca3af]">Due Date</p><p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedSurvey?.dueDate }}</p></div>
+                <div><p class="text-[10px] text-[#9ca3af]">Status</p><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': selectedSurvey?.status === 'Completed', 'bg-blue-50 text-blue-700': selectedSurvey?.status === 'In Progress', 'bg-gray-100 text-gray-600': selectedSurvey?.status === 'Pending'}">{{ selectedSurvey?.status }}</span></div>
+              </div>
+              <div class="mt-4"><p class="text-[10px] text-[#9ca3af]">Description</p><p class="text-[13px] text-[#1f2937] mt-1">{{ selectedSurvey?.description }}</p></div>
+            </div>
+
+            <div class="bg-[#EEEEEE] rounded-lg p-4">
+              <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">INSPECTION CHECKLIST</h4>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="flex items-center gap-2"><span class="w-5 h-5 border-2 border-[#d1d5db] rounded"></span><span class="text-[12px] text-[#1f2937]">Property Photos</span></div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 border-2 border-[#d1d5db] rounded"></span><span class="text-[12px] text-[#1f2937]">GPS Verification</span></div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 border-2 border-[#d1d5db] rounded"></span><span class="text-[12px] text-[#1f2937]">Physical Measurements</span></div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 border-2 border-[#d1d5db] rounded"></span><span class="text-[12px] text-[#1f2937]">Condition Assessment</span></div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 border-2 border-[#d1d5db] rounded"></span><span class="text-[12px] text-[#1f2937]">Occupancy Verification</span></div>
+                <div class="flex items-center gap-2"><span class="w-5 h-5 border-2 border-[#d1d5db] rounded"></span><span class="text-[12px] text-[#1f2937]">Ownership Check</span></div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-[#e5e7eb]">
+              <div class="text-[11px] text-[#6b7280]">Complete all checklist items before submitting</div>
+              <div class="flex gap-3">
+                <button v-if="selectedSurvey?.status === 'Pending'" @click="startInspection(selectedSurvey); showViewModal = false" class="px-4 py-2 text-[11px] bg-[#1f2937] text-white rounded-lg hover:bg-[#374151]">Start Inspection</button>
+                <button v-else-if="selectedSurvey?.status === 'In Progress'" @click="completeInspection(selectedSurvey)" class="px-4 py-2 text-[11px] bg-green-600 text-white rounded-lg hover:bg-green-700">Complete & Submit</button>
+                <button v-else-if="selectedSurvey?.status === 'Completed'" class="px-4 py-2 text-[11px] bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">Completed {{ selectedSurvey?.completedDate }}</button>
+              </div>
+            </div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex justify-end"><button @click="showViewModal = false" class="px-4 py-2 text-[11px] bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Close</button></div>
         </div>
       </div>
     </Teleport>
