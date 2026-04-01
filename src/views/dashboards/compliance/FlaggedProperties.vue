@@ -106,49 +106,49 @@ const getAIRecommendations = () => {
           </div>
           <div class="p-6 space-y-6">
             <div class="grid grid-cols-3 gap-4">
-              <div class="bg-gray-50 rounded-lg p-4">
-                <h4 class="text-[11px] text-gray-500 mb-3 font-medium">OCCUPANT INFO</h4>
+              <div class="bg-[#EEEEEE] rounded-lg p-4">
+                <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">OCCUPANT INFO</h4>
                 <div class="space-y-3">
                   <div>
-                    <p class="text-[10px] text-gray-400">Occupant ID</p>
-                    <p class="text-[13px] font-semibold text-gray-800">{{ selectedFlag?.occupantId }}</p>
+                    <p class="text-[10px] text-[#9ca3af]">Occupant ID</p>
+                    <p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedFlag?.occupantId }}</p>
                   </div>
                   <div>
-                    <p class="text-[10px] text-gray-400">Location</p>
-                    <p class="text-[13px] font-semibold text-gray-800">{{ selectedFlag?.location }}</p>
+                    <p class="text-[10px] text-[#9ca3af]">Location</p>
+                    <p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedFlag?.location }}</p>
                   </div>
                 </div>
               </div>
-              <div class="bg-gray-50 rounded-lg p-4">
-                <h4 class="text-[11px] text-gray-500 mb-3 font-medium">PROPERTY INFO</h4>
+              <div class="bg-[#EEEEEE] rounded-lg p-4">
+                <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">PROPERTY INFO</h4>
                 <div class="space-y-3">
                   <div>
-                    <p class="text-[10px] text-gray-400">Property ID</p>
-                    <p class="text-[13px] font-semibold text-gray-800">{{ selectedFlag?.id }}</p>
+                    <p class="text-[10px] text-[#9ca3af]">Property ID</p>
+                    <p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedFlag?.id }}</p>
                   </div>
                   <div>
-                    <p class="text-[10px] text-gray-400">Risk Level</p>
-                    <span class="inline-block px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-red-100 text-red-700': selectedFlag?.riskLevel === 'Critical', 'bg-orange-100 text-orange-700': selectedFlag?.riskLevel === 'High', 'bg-yellow-100 text-yellow-700': selectedFlag?.riskLevel === 'Medium'}">{{ selectedFlag?.riskLevel }}</span>
+                    <p class="text-[10px] text-[#9ca3af]">Risk Level</p>
+                    <span class="inline-block px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-red-50 text-red-700': selectedFlag?.riskLevel === 'Critical', 'bg-orange-50 text-orange-700': selectedFlag?.riskLevel === 'High', 'bg-yellow-50 text-yellow-700': selectedFlag?.riskLevel === 'Medium'}">{{ selectedFlag?.riskLevel }}</span>
                   </div>
                   <div>
-                    <p class="text-[10px] text-gray-400">Tax Type</p>
-                    <p class="text-[13px] font-semibold text-gray-800">{{ selectedFlag?.taxType }}</p>
+                    <p class="text-[10px] text-[#9ca3af]">Tax Type</p>
+                    <p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedFlag?.taxType }}</p>
                   </div>
                 </div>
               </div>
-              <div class="bg-gray-50 rounded-lg p-4">
-                <h4 class="text-[11px] text-gray-500 mb-3 font-medium">VALUATION</h4>
+              <div class="bg-[#EEEEEE] rounded-lg p-4">
+                <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">VALUATION</h4>
                 <div class="space-y-3">
                   <div>
-                    <p class="text-[10px] text-gray-400">House Type</p>
-                    <p class="text-[13px] font-semibold text-gray-800">{{ selectedFlag?.houseType }}</p>
+                    <p class="text-[10px] text-[#9ca3af]">House Type</p>
+                    <p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedFlag?.houseType }}</p>
                   </div>
                   <div>
-                    <p class="text-[10px] text-gray-400">Declared Value</p>
+                    <p class="text-[10px] text-[#9ca3af]">Declared Value</p>
                     <p class="text-[13px] font-semibold text-red-600">{{ selectedFlag?.declaredValue }}</p>
                   </div>
                   <div>
-                    <p class="text-[10px] text-gray-400">Estimated Value</p>
+                    <p class="text-[10px] text-[#9ca3af]">Estimated Value</p>
                     <p class="text-[13px] font-semibold text-green-700">{{ selectedFlag?.estimatedValue }}</p>
                   </div>
                 </div>
@@ -156,39 +156,39 @@ const getAIRecommendations = () => {
             </div>
 
             <div>
-              <h4 class="text-[11px] text-gray-500 mb-2 font-medium">PROPERTY LOCATION</h4>
-              <div class="w-full h-64 bg-gray-200 rounded-lg overflow-hidden relative">
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-green-100 flex items-center justify-center">
+              <h4 class="text-[11px] text-[#6b7280] mb-2 font-semibold">PROPERTY LOCATION</h4>
+              <div class="w-full h-64 bg-[#EEEEEE] rounded-lg overflow-hidden relative">
+                <div class="absolute inset-0 flex items-center justify-center">
                   <div class="text-center">
                     <div class="w-16 h-16 bg-[#B90B0B] rounded-full flex items-center justify-center mx-auto mb-2 shadow-lg">
                       <span class="text-white text-2xl">📍</span>
                     </div>
-                    <p class="text-[13px] font-semibold text-gray-700">{{ selectedFlag?.location }}</p>
-                    <p class="text-[11px] text-gray-500">Coordinates: {{ selectedFlag?.lat }}, {{ selectedFlag?.lng }}</p>
+                    <p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedFlag?.location }}</p>
+                    <p class="text-[11px] text-[#6b7280]">Coordinates: {{ selectedFlag?.lat }}, {{ selectedFlag?.lng }}</p>
                   </div>
                 </div>
-                <div class="absolute bottom-3 right-3 bg-white/90 px-3 py-1 rounded text-[10px] text-gray-600">
+                <div class="absolute bottom-3 right-3 bg-white/90 px-3 py-1 rounded text-[10px] text-[#6b7280]">
                   Google Maps Placeholder
                 </div>
               </div>
             </div>
 
             <div>
-              <h4 class="text-[11px] text-gray-500 mb-2 font-medium">AI INSIGHTS</h4>
-              <textarea v-model="aiInsights" rows="5" :placeholder="`Enter the property details above to obtain insights...\n\nExample: Analyze this property for tax compliance risks based on the declared vs estimated value discrepancy.`" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-[13px] resize-none focus:ring-2 focus:ring-[#B90B0B] focus:border-transparent"></textarea>
-              <button @click="getAIRecommendations" class="mt-3 px-4 py-2 text-[11px] bg-purple-600 text-white rounded-lg hover:bg-purple-700 flex items-center gap-2">
+              <h4 class="text-[11px] text-[#6b7280] mb-2 font-semibold">AI INSIGHTS</h4>
+              <textarea v-model="aiInsights" rows="5" :placeholder="`Enter the property details above to obtain insights...\n\nExample: Analyze this property for tax compliance risks based on the declared vs estimated value discrepancy.`" class="w-full px-4 py-3 border border-[#e5e7eb] rounded-lg text-[13px] resize-none focus:ring-2 focus:ring-[#B90B0B] focus:border-transparent"></textarea>
+              <button @click="getAIRecommendations" class="mt-3 px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010] flex items-center gap-2">
                 <span>🤖</span> Get AI Recommendations
               </button>
             </div>
 
-            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
-              <div class="text-[11px] text-gray-500">
+            <div class="flex items-center justify-between pt-4 border-t border-[#e5e7eb]">
+              <div class="text-[11px] text-[#6b7280]">
                 <span class="font-medium">Owner:</span> {{ selectedFlag?.owner }} | 
                 <span class="font-medium">Reason:</span> {{ selectedFlag?.reason }} | 
                 <span class="font-medium">Investigator:</span> {{ selectedFlag?.investigator }}
               </div>
               <div class="flex gap-3">
-                <button @click="escalateAudit" class="px-4 py-2 text-[11px] bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+                <button @click="escalateAudit" class="px-4 py-2 text-[11px] bg-[#1f2937] text-white rounded-lg hover:bg-[#374151]">
                   Escalate Audit
                 </button>
                 <button @click="getComplianceNotice" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">
