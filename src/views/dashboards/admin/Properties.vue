@@ -65,7 +65,7 @@ const showToast = (message: string) => {
 }
 
 const openAddModal = () => {
-  newProperty.value = { owner: '', address: '', type: 'Residential', value: '', status: 'Pending' }
+  newProperty.value = { owner: '', address: '', type: 'Residential', value: '', status: 'Pending', declaredValue: 0, ownershipHistory: 1, paymentHistory: 'Good', surveyStatus: 'Pending' }
   showAddModal.value = true
 }
 

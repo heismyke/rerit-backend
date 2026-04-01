@@ -83,7 +83,7 @@ const handleAddNote = () => {
     title: newNote.value.title,
     caseId: newNote.value.caseId,
     type: newNote.value.type,
-    author: user?.name ? String(user.name) : 'Agent',
+    author: user.value?.name || 'Agent',
     created: new Date().toISOString().split('T')[0],
     lastUpdated: new Date().toISOString().split('T')[0],
     content: newNote.value.content

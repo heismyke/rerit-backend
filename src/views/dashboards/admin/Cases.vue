@@ -43,7 +43,7 @@ const paginatedCases = computed(() => { const start = (currentPage.value - 1) * 
 const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) currentPage.value = page }
 
 const showToast = (message: string) => { toast.value = { show: true, message }; setTimeout(() => { toast.value.show = false }, 3000) }
-const openAddModal = () => { newCase.value = { title: '', type: 'Tax Evasion', priority: 'Medium', status: 'Open', assigned: '' }; showAddModal.value = true }
+const openAddModal = () => { newCase.value = { title: '', type: 'Tax Evasion', priority: 'Medium', status: 'Open', assigned: '', riskScore: 30, riskLevel: 'Low' }; showAddModal.value = true }
 const openEditModal = (c: any) => { selectedCase.value = c; editCase.value = { ...c }; showEditModal.value = true }
 const openViewModal = (c: any) => { selectedCase.value = c; showViewModal.value = true }
 
