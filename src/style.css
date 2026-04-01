@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    @apply bg-[#f5f7fa] text-[#1f2937];
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white border border-[#e5e7eb] shadow-sm rounded-lg;
+  }
+  
+  .btn-primary {
+    @apply px-4 py-2 bg-[#B90B0B] text-white text-sm font-medium rounded-lg hover:bg-[#991010] transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply px-4 py-2 bg-white text-[#374151] text-sm font-medium rounded-lg border border-[#d1d5db] hover:bg-[#f9fafb] hover:border-[#9ca3af] transition-colors;
+  }
+  
+  .btn-ghost {
+    @apply px-4 py-2 text-[#6b7280] text-sm font-medium rounded-lg hover:bg-[#f3f4f6] hover:text-[#1f2937] transition-colors;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-[#d1d5db] rounded-lg text-sm focus:ring-2 focus:ring-[#B90B0B] focus:border-[#B90B0B] outline-none transition bg-white;
+  }
+  
+  .table-header {
+    @apply px-6 py-3 text-left text-[11px] font-semibold text-[#9ca3af] uppercase tracking-wider bg-[#fafafa];
+  }
+  
+  .table-cell {
+    @apply px-6 py-4 text-sm text-[#374151];
+  }
+
+  .sidebar {
+    @apply bg-[#EEEEEE] min-h-screen flex flex-col;
+  }
+  
+  .sidebar-item-active {
+    @apply bg-[#B90B0B] text-white rounded-lg;
+  }
+  
+  .sidebar-item-inactive {
+    @apply text-[#374151] hover:bg-[#B90B0B] hover:text-white rounded-lg;
+  }
+  
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all rounded-lg;
+  }
+
+  .stat-card {
+    @apply bg-white border border-[#e5e7eb] p-5 rounded-lg;
+  }
+
+  .metric-label {
+    @apply text-[11px] font-medium text-[#9ca3af] uppercase tracking-wide;
+  }
+
+  .metric-value {
+    @apply text-2xl font-semibold text-[#1f2937] mt-1;
+  }
+
+  .section-title {
+    @apply text-[13px] font-semibold text-[#1f2937] mb-4;
+  }
+
+  .divider {
+    @apply border-t border-[#e5e7eb];
+  }
+}
