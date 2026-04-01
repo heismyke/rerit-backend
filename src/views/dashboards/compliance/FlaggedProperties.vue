@@ -17,12 +17,13 @@ const showViewModal = ref(false)
 const selectedFlag = ref<any>(null)
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 const aiInsights = ref('')
+const estimatedRent = ref('')
 
 const flaggedProperties = ref([
-  { id: 'FLAG-001', property: 'Plot 8, Banana Island', owner: 'Folake Adeyemi', reason: 'Undeclared renovation', priority: 'Critical', status: 'Under Investigation', flaggedDate: '2024-01-15', investigator: 'Agent A', occupantId: 'OCC-001', location: 'Banana Island, Lagos', riskLevel: 'Critical', taxType: 'Property Tax', houseType: 'Residential Mansion', declaredValue: 'N500,000,000', estimatedValue: 'N850,000,000', lat: 6.4281, lng: 3.4219 },
-  { id: 'FLAG-002', property: 'Block 12, Maitama', owner: 'Unknown Entity', reason: 'Suspected tax evasion', priority: 'High', status: 'Pending Review', flaggedDate: '2024-01-12', investigator: 'Agent B', occupantId: 'OCC-002', location: 'Maitama, Abuja', riskLevel: 'High', taxType: 'Land Use Charge', houseType: 'Commercial Complex', declaredValue: 'N200,000,000', estimatedValue: 'N450,000,000', lat: 9.0579, lng: 7.4951 },
-  { id: 'FLAG-003', property: 'Plot 45, VI', owner: 'Chinedu & Partners', reason: 'Value discrepancy', priority: 'Medium', status: 'Resolved', flaggedDate: '2024-01-08', investigator: 'Agent A', occupantId: 'OCC-003', location: 'Victoria Island, Lagos', riskLevel: 'Medium', taxType: 'Development Levy', houseType: 'Mixed Use', declaredValue: 'N180,000,000', estimatedValue: 'N220,000,000', lat: 6.4281, lng: 3.4219 },
-  { id: 'FLAG-004', property: 'Estate 7, Lekki', owner: 'Global Ventures Ltd', reason: 'Document forgery', priority: 'High', status: 'Under Investigation', flaggedDate: '2024-01-10', investigator: 'Agent C', occupantId: 'OCC-004', location: 'Lekki Phase 1, Lagos', riskLevel: 'High', taxType: 'Property Tax', houseType: 'Residential Estate', declaredValue: 'N350,000,000', estimatedValue: 'N620,000,000', lat: 6.4312, lng: 3.5012 },
+  { id: 'FLAG-001', property: 'Plot 8, Banana Island', owner: 'Folake Adeyemi', reason: 'Undeclared renovation', priority: 'Critical', status: 'Under Investigation', flaggedDate: '2024-01-15', investigator: 'Agent A', occupantId: 'OCC-001', location: 'Banana Island, Lagos', riskLevel: 'Critical', taxType: 'Property Tax', houseType: 'Residential Mansion', declaredValue: 'N500,000,000', estimatedValue: 'N850,000,000', declaredRent: 'N2,500,000', lat: 6.4281, lng: 3.4219 },
+  { id: 'FLAG-002', property: 'Block 12, Maitama', owner: 'Unknown Entity', reason: 'Suspected tax evasion', priority: 'High', status: 'Pending Review', flaggedDate: '2024-01-12', investigator: 'Agent B', occupantId: 'OCC-002', location: 'Maitama, Abuja', riskLevel: 'High', taxType: 'Land Use Charge', houseType: 'Commercial Complex', declaredValue: 'N200,000,000', estimatedValue: 'N450,000,000', declaredRent: 'N800,000', lat: 9.0579, lng: 7.4951 },
+  { id: 'FLAG-003', property: 'Plot 45, VI', owner: 'Chinedu & Partners', reason: 'Value discrepancy', priority: 'Medium', status: 'Resolved', flaggedDate: '2024-01-08', investigator: 'Agent A', occupantId: 'OCC-003', location: 'Victoria Island, Lagos', riskLevel: 'Medium', taxType: 'Development Levy', houseType: 'Mixed Use', declaredValue: 'N180,000,000', estimatedValue: 'N220,000,000', declaredRent: 'N1,200,000', lat: 6.4281, lng: 3.4219 },
+  { id: 'FLAG-004', property: 'Estate 7, Lekki', owner: 'Global Ventures Ltd', reason: 'Document forgery', priority: 'High', status: 'Under Investigation', flaggedDate: '2024-01-10', investigator: 'Agent C', occupantId: 'OCC-004', location: 'Lekki Phase 1, Lagos', riskLevel: 'High', taxType: 'Property Tax', houseType: 'Residential Estate', declaredValue: 'N350,000,000', estimatedValue: 'N620,000,000', declaredRent: 'N1,800,000', lat: 6.4312, lng: 3.5012 },
 ])
 
 const filteredProperties = computed(() => flaggedProperties.value.filter(p => {
@@ -36,19 +37,36 @@ const paginatedProperties = computed(() => { const start = (currentPage.value - 
 const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) currentPage.value = page }
 
 const showToast = (message: string) => { toast.value = { show: true, message }; setTimeout(() => { toast.value.show = false }, 3000) }
-const openViewModal = (f: any) => { selectedFlag.value = f; aiInsights.value = ''; showViewModal.value = true }
-const startInvestigation = (f: any) => { showToast(`Investigation started for ${f.id}`) }
-const escalateAudit = () => { showToast(`Audit escalated for ${selectedFlag.value?.id}`); showViewModal.value = false }
-const getComplianceNotice = () => { showToast(`Compliance notice generated for ${selectedFlag.value?.id}`) }
+const openViewModal = (f: any) => { selectedFlag.value = f; aiInsights.value = ''; estimatedRent.value = ''; showViewModal.value = true }
+const startInvestigation = (f: any) => { showToast('Investigation started for ' + f.id) }
+const escalateAudit = () => { showToast('Audit escalated for ' + selectedFlag.value?.id); showViewModal.value = false }
+const getComplianceNotice = () => { showToast('Compliance notice generated for ' + selectedFlag.value?.id) }
+
+const calculateComplianceGap = computed(() => {
+  if (!selectedFlag.value || !estimatedRent.value) return null
+  const declared = parseFloat(selectedFlag.value.declaredRent.replace(/[^0-9.]/g, ''))
+  const estimated = parseFloat(estimatedRent.value.replace(/[^0-9.]/g, ''))
+  const gap = estimated - declared
+  return gap
+})
+
+const hasTaxIssue = computed(() => {
+  if (!calculateComplianceGap.value) return false
+  return calculateComplianceGap.value > 0
+})
+
 const getAIRecommendations = () => {
-  if (!selectedFlag.value || !aiInsights.value.trim()) {
-    showToast('Please enter property details to get AI insights')
+  if (!selectedFlag.value || !estimatedRent.value.trim()) {
+    showToast('Please enter the estimated rent to get AI insights')
     return
   }
-  showToast('Analyzing property data...')
+  showToast('Analyzing rent data...')
+  const gap = calculateComplianceGap.value ?? 0
   const riskScore = selectedFlag.value?.riskLevel === 'Critical' ? '85/100' : selectedFlag.value?.riskLevel === 'High' ? '68/100' : '45/100'
+  const declaredRentNum = parseFloat(selectedFlag.value?.declaredRent?.replace(/[^0-9.]/g, '') || '0')
+  const gapPercent = declaredRentNum > 0 ? Math.round((gap / declaredRentNum) * 100) : 0
   setTimeout(() => {
-    aiInsights.value = 'AI Analysis for ' + selectedFlag.value?.property + ':\n\n• Risk Score: ' + riskScore + '\n\n• Key Findings:\n  - Declared value appears below market value\n  - Property has been flagged for ' + selectedFlag.value?.reason + '\n  - Recommend immediate audit verification\n\n• Suggested Actions:\n  1. Request supporting documentation\n  2. Schedule physical inspection\n  3. Compare with similar properties in area'
+    aiInsights.value = 'AI Analysis for ' + selectedFlag.value?.property + ':\n\n• Risk Score: ' + riskScore + '\n\n• Rent Analysis:\n  - Declared Rent (Tax Payer): ' + selectedFlag.value?.declaredRent + '/year\n  - Estimated Rent (Market Value): ' + estimatedRent.value + '/year\n  - Compliance Gap: ' + (gap > 0 ? '+' : '') + 'N' + Math.abs(gap).toLocaleString() + (gap > 0 ? ' (TAX ISSUE)' : ' (Compliant)') + '\n\n• Key Findings:\n  - ' + (gap > 0 ? 'Estimated rent exceeds declared rent by ' + gapPercent + '%' : 'Rent declaration appears accurate') + '\n  - Property has been flagged for ' + selectedFlag.value?.reason + '\n  - Based on location (' + selectedFlag.value?.location + ') and property type (' + selectedFlag.value?.houseType + '), market rate analysis suggests ' + (gap > 0 ? 'under-declaration' : 'accurate reporting') + '\n\n• Suggested Actions:\n  1. ' + (gap > 0 ? 'Issue compliance notice for rent under-declaration' : 'Document findings and close case') + '\n  2. Request supporting documents from taxpayer\n  3. Schedule physical property inspection\n  4. Compare with similar properties in ' + selectedFlag.value?.location?.split(',')[0] + ' area'
     showToast('AI analysis complete')
   }, 1500)
 }
@@ -105,7 +123,7 @@ const getAIRecommendations = () => {
             <button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>
           <div class="p-6 space-y-6">
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-4 gap-4">
               <div class="bg-[#EEEEEE] rounded-lg p-4">
                 <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">OCCUPANT INFO</h4>
                 <div class="space-y-3">
@@ -150,6 +168,29 @@ const getAIRecommendations = () => {
                   <div>
                     <p class="text-[10px] text-[#9ca3af]">Estimated Value</p>
                     <p class="text-[13px] font-semibold text-green-700">{{ selectedFlag?.estimatedValue }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-[#EEEEEE] rounded-lg p-4">
+                <h4 class="text-[11px] text-[#6b7280] mb-3 font-semibold">RENT ANALYSIS</h4>
+                <div class="space-y-3">
+                  <div>
+                    <p class="text-[10px] text-[#9ca3af]">Declared Rent (Tax Payer)</p>
+                    <p class="text-[13px] font-semibold text-red-600">{{ selectedFlag?.declaredRent }}/year</p>
+                  </div>
+                  <div>
+                    <p class="text-[10px] text-[#9ca3af]">Estimated Rent (Market)</p>
+                    <input v-model="estimatedRent" type="text" placeholder="N0" class="w-full px-2 py-1 text-[13px] font-semibold border border-[#d1d5db] rounded focus:ring-1 focus:ring-[#B90B0B] focus:border-transparent" />
+                  </div>
+                  <div v-if="calculateComplianceGap !== null">
+                    <p class="text-[10px] text-[#9ca3af]">Compliance Gap</p>
+                    <div class="flex items-center gap-2">
+                      <p class="text-[13px] font-semibold" :class="hasTaxIssue ? 'text-red-600' : 'text-green-700'">
+                        {{ hasTaxIssue ? '+' : '' }}N{{ Math.abs(calculateComplianceGap).toLocaleString() }}
+                      </p>
+                      <span v-if="hasTaxIssue" class="px-1.5 py-0.5 text-[10px] bg-red-100 text-red-700 rounded-full font-medium">TAX ISSUE</span>
+                      <span v-else class="px-1.5 py-0.5 text-[10px] bg-green-100 text-green-700 rounded-full font-medium">OK</span>
+                    </div>
                   </div>
                 </div>
               </div>
