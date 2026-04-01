@@ -18,6 +18,12 @@
 
 ---
 
+## Mission
+
+> How can the government ensure that all properties are registered, correctly valued, assessed for tax, audited, and enforced efficiently, while maximizing compliance and minimizing revenue leakage?
+
+ReRiT is designed to address this challenge by providing a comprehensive platform for real estate revenue administration in Nigeria.
+
 ---
 
 ## Features
