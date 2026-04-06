@@ -19,7 +19,7 @@
   }
   
   .btn-primary {
-    @apply px-4 py-2 bg-[#B90B0B] text-white text-sm font-medium rounded-lg hover:bg-[#991010] transition-colors;
+    @apply px-4 py-2 bg-[#2D5A27] text-white text-sm font-medium rounded-lg hover:bg-[#1e3d1a] transition-colors;
   }
   
   .btn-secondary {
@@ -31,7 +31,7 @@
   }
   
   .input-field {
-    @apply w-full px-3 py-2 border border-[#d1d5db] rounded-lg text-sm focus:ring-2 focus:ring-[#B90B0B] focus:border-[#B90B0B] outline-none transition bg-white;
+    @apply w-full px-3 py-2 border border-[#d1d5db] rounded-lg text-sm focus:ring-2 focus:ring-[#2D5A27] focus:border-[#2D5A27] outline-none transition bg-white;
   }
   
   .table-header {
@@ -47,11 +47,11 @@
   }
   
   .sidebar-item-active {
-    @apply bg-[#B90B0B] text-white rounded-lg;
+    @apply bg-[#2D5A27] text-white rounded-lg;
   }
   
   .sidebar-item-inactive {
-    @apply text-[#374151] hover:bg-[#B90B0B] hover:text-white rounded-lg;
+    @apply text-[#374151] hover:bg-[#2D5A27] hover:text-white rounded-lg;
   }
   
   .sidebar-item {

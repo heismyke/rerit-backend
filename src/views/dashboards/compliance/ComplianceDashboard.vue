@@ -31,7 +31,7 @@ const barData = {
   datasets: [{
     label: 'Cases',
     data: [25, 18, 12, 20, 14],
-    backgroundColor: '#B90B0B',
+    backgroundColor: '#2D5A27',
     borderRadius: 2,
     borderSkipped: false,
   }],
@@ -41,7 +41,7 @@ const doughnutData = {
   labels: ['Resolved', 'Under Review', 'Active', 'Pending'],
   datasets: [{
     data: [72, 12, 3, 2],
-    backgroundColor: ['#16a34a', '#f59e0b', '#B90B0B', '#d1d5db'],
+    backgroundColor: ['#16a34a', '#f59e0b', '#2D5A27', '#d1d5db'],
     borderWidth: 0,
     cutout: '70%',
   }],
@@ -51,7 +51,7 @@ const lineData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
   datasets: [
     { label: 'Resolved', data: [10, 15, 12, 18, 22, 25], borderColor: '#16a34a', backgroundColor: 'rgba(22, 163, 74, 0.1)', fill: true, tension: 0.3, pointRadius: 0 },
-    { label: 'New Cases', data: [8, 12, 14, 16, 18, 20], borderColor: '#B90B0B', backgroundColor: 'rgba(220, 38, 38, 0.1)', fill: true, tension: 0.3, pointRadius: 0 },
+    { label: 'New Cases', data: [8, 12, 14, 16, 18, 20], borderColor: '#2D5A27', backgroundColor: 'rgba(45, 90, 39, 0.1)', fill: true, tension: 0.3, pointRadius: 0 },
   ],
 }
 

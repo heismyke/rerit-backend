@@ -174,7 +174,7 @@ const closeModal = () => {
                   <td class="table-cell">
                     <div class="flex gap-2">
                       <button @click="handleView(record)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button>
-                      <button @click="handleEdit(record)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">Edit</button>
+                      <button @click="handleEdit(record)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">Edit</button>
                     </div>
                   </td>
                 </tr>
@@ -197,7 +197,7 @@ const closeModal = () => {
   <Teleport to="body">
     <div v-if="showAddModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div class="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden max-h-[90vh] overflow-y-auto">
-        <div class="bg-[#B90B0B] px-6 py-4">
+        <div class="bg-[#2D5A27] px-6 py-4">
           <h3 class="text-base font-semibold text-white">Add New Record</h3>
         </div>
         <div class="p-6">
@@ -237,7 +237,7 @@ const closeModal = () => {
             </div>
             <div>
               <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Upload Documents</label>
-              <div class="border-2 border-dashed border-[#d1d5db] rounded-lg p-6 text-center hover:border-[#B90B0B] transition cursor-pointer">
+              <div class="border-2 border-dashed border-[#d1d5db] rounded-lg p-6 text-center hover:border-[#2D5A27] transition cursor-pointer">
                 <input type="file" multiple class="hidden" id="addFileUpload" />
                 <label for="addFileUpload" class="cursor-pointer">
                   <div class="text-[#6b7280]">
@@ -258,7 +258,7 @@ const closeModal = () => {
 
     <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div class="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
-        <div class="bg-[#B90B0B] px-6 py-4">
+        <div class="bg-[#2D5A27] px-6 py-4">
           <h3 class="text-base font-semibold text-white">View Record Details</h3>
         </div>
         <div class="p-6">
@@ -326,7 +326,7 @@ const closeModal = () => {
 
     <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div class="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden max-h-[90vh] overflow-y-auto">
-        <div class="bg-[#B90B0B] px-6 py-4">
+        <div class="bg-[#2D5A27] px-6 py-4">
           <h3 class="text-base font-semibold text-white">Edit Record</h3>
         </div>
         <div class="p-6">
@@ -376,7 +376,7 @@ const closeModal = () => {
             </div>
             <div>
               <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Upload Documents</label>
-              <div class="border-2 border-dashed border-[#d1d5db] rounded-lg p-6 text-center hover:border-[#B90B0B] transition cursor-pointer">
+              <div class="border-2 border-dashed border-[#d1d5db] rounded-lg p-6 text-center hover:border-[#2D5A27] transition cursor-pointer">
                 <input type="file" multiple class="hidden" id="editFileUpload" />
                 <label for="editFileUpload" class="cursor-pointer">
                   <div class="text-[#6b7280]">

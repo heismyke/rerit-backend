@@ -71,7 +71,7 @@ const startAudit = (p: any) => { showToast(`Audit started for ${p.id}`) }
                   <td class="table-cell font-medium">{{ property.id }}</td><td class="table-cell">{{ property.owner }}</td><td class="table-cell text-[#6b7280]">{{ property.address }}</td><td class="table-cell">{{ property.type }}</td><td class="table-cell">{{ property.value }}</td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': property.status === 'Verified', 'bg-yellow-50 text-yellow-700': property.status === 'Pending', 'bg-red-50 text-red-700': property.status === 'Flagged'}">{{ property.status }}</span></td>
                   <td class="table-cell text-[#9ca3af]">{{ property.lastAudit }}</td>
-                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(property)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button @click="startAudit(property)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#6a0707]">Audit</button></div></td>
+                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(property)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button @click="startAudit(property)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#6a0707]">Audit</button></div></td>
                 </tr>
               </tbody>
             </table>
@@ -93,7 +93,7 @@ const startAudit = (p: any) => { showToast(`Audit started for ${p.id}`) }
     <Teleport to="body">
       <div v-if="showAddModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Add Property</h3><button @click="showAddModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Add Property</h3><button @click="showAddModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Owner</label><input v-model="newProperty.owner" type="text" placeholder="Enter owner name" class="input-field w-full" /></div>
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Address</label><input v-model="newProperty.address" type="text" placeholder="Enter address" class="input-field w-full" /></div>
@@ -102,7 +102,7 @@ const startAudit = (p: any) => { showToast(`Audit started for ${p.id}`) }
               <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Value (NGN)</label><input v-model="newProperty.value" type="text" placeholder="N0" class="input-field w-full" /></div>
             </div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showAddModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleAddProperty" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Add</button></div>
+          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showAddModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleAddProperty" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Add</button></div>
         </div>
       </div>
     </Teleport>
@@ -110,7 +110,7 @@ const startAudit = (p: any) => { showToast(`Audit started for ${p.id}`) }
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Property Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Property Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><p class="text-[11px] text-gray-500">Property ID</p><p class="text-[13px] font-medium">{{ selectedProperty?.id }}</p></div>

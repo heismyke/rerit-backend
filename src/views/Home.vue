@@ -73,12 +73,12 @@ const closeModal = () => {
     <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-[#f5f7fa]">
       <div class="w-full max-w-md">
         <div class="lg:hidden text-center mb-8">
-          <h1 class="text-3xl font-bold text-[#B90B0B]">ReRiT</h1>
+          <h1 class="text-3xl font-bold text-[#2D5A27]">ReRiT</h1>
           <p class="text-sm text-gray-500 mt-1">Revenue System</p>
         </div>
 
         <div class="mb-6">
-          <img src="/nrs.png" alt="NRS" class="h-16" />
+          <img src="/fct-irs.svg" alt="FCT-IRS" class="h-16" />
         </div>
 
         <h2 class="text-xl font-semibold text-[#1f2937] mb-1">Welcome</h2>
@@ -89,9 +89,9 @@ const closeModal = () => {
             v-for="role in roles"
             :key="role.id"
             @click="handleRoleSelect(role)"
-            class="w-full bg-white border border-gray-200 rounded-xl p-4 hover:border-[#B90B0B] hover:bg-red-50/30 transition-all text-left flex items-center gap-4 shadow-md"
+            class="w-full bg-white border border-gray-200 rounded-xl p-4 hover:border-[#2D5A27] hover:bg-red-50/30 transition-all text-left flex items-center gap-4 shadow-md"
           >
-            <span class="text-xl text-[#B90B0B]">{{ role.icon }}</span>
+            <span class="text-xl text-[#2D5A27]">{{ role.icon }}</span>
             <div>
               <h3 class="text-sm font-medium text-[#1f2937]">{{ role.name }}</h3>
               <p class="text-xs text-gray-500">{{ role.description }}</p>
@@ -104,7 +104,7 @@ const closeModal = () => {
     <Teleport to="body">
       <div v-if="showLoginModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
-          <div class="bg-[#B90B0B] px-6 py-4">
+          <div class="bg-[#2D5A27] px-6 py-4">
             <h3 class="text-base font-semibold text-white">Sign In</h3>
             <p class="text-xs text-white/80 mt-0.5">{{ selectedRoleForLogin?.name }}</p>
           </div>
@@ -132,7 +132,7 @@ const closeModal = () => {
                 </div>
                 <button
                   @click="showForgotPassword = true"
-                  class="text-xs text-[#B90B0B] hover:text-[#6a0707] font-medium"
+                  class="text-xs text-[#2D5A27] hover:text-[#6a0707] font-medium"
                 >
                   Forgot Password?
                 </button>
@@ -147,7 +147,7 @@ const closeModal = () => {
                   <label class="block text-xs font-medium text-gray-600 mb-1.5">Email Address</label>
                   <input v-model="email" type="email" placeholder="Enter your email" class="input-field" />
                 </div>
-                <button @click="showForgotPassword = false" class="text-xs text-[#B90B0B] font-medium">Back to Login</button>
+                <button @click="showForgotPassword = false" class="text-xs text-[#2D5A27] font-medium">Back to Login</button>
                 <button @click="showForgotPassword = false" class="btn-primary w-full">Send Reset Link</button>
               </div>
             </template>

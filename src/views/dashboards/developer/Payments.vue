@@ -61,8 +61,8 @@ const updateAmount = () => {
             <div class="bg-white border border-[#e5e7eb] rounded-lg p-5">
               <h3 class="text-[13px] font-semibold text-[#1f2937] mb-4">Payment Method</h3>
               <div class="space-y-3">
-                <label v-for="method in paymentMethods" :key="method.id" class="flex items-center gap-4 p-4 border rounded cursor-pointer transition" :class="selectedPaymentMethod === method.id ? 'border-[#B90B0B] bg-red-50/30' : 'border-[#e5e7eb] hover:border-[#d1d5db]'">
-                  <input v-model="selectedPaymentMethod" type="radio" :value="method.id" class="w-4 h-4 text-[#B90B0B]" />
+                <label v-for="method in paymentMethods" :key="method.id" class="flex items-center gap-4 p-4 border rounded cursor-pointer transition" :class="selectedPaymentMethod === method.id ? 'border-[#2D5A27] bg-red-50/30' : 'border-[#e5e7eb] hover:border-[#d1d5db]'">
+                  <input v-model="selectedPaymentMethod" type="radio" :value="method.id" class="w-4 h-4 text-[#2D5A27]" />
                   <span class="text-lg">{{ method.icon }}</span>
                   <div><p class="text-[13px] font-medium text-[#1f2937]">{{ method.name }}</p><p class="text-[11px] text-[#9ca3af]">{{ method.description }}</p></div>
                 </label>
@@ -89,7 +89,7 @@ const updateAmount = () => {
             </div>
             <div v-if="selectedPaymentMethod === 'ussd'" class="bg-white border border-[#e5e7eb] rounded-lg p-5">
               <h3 class="text-[13px] font-semibold text-[#1f2937] mb-4">USSD Payment</h3>
-              <div class="text-center p-4 bg-[#f9fafb] rounded"><p class="text-[11px] text-[#9ca3af] mb-2">Dial this code on your registered phone number</p><p class="text-2xl font-bold text-[#B90B0B]">*901*000*1234#</p></div>
+              <div class="text-center p-4 bg-[#f9fafb] rounded"><p class="text-[11px] text-[#9ca3af] mb-2">Dial this code on your registered phone number</p><p class="text-2xl font-bold text-[#2D5A27]">*901*000*1234#</p></div>
             </div>
             <button @click="makePayment" class="btn-primary w-full py-3">Proceed to Pay N{{ Number(amount).toLocaleString() }}</button>
           </div>
@@ -100,7 +100,7 @@ const updateAmount = () => {
                 <div class="flex justify-between"><span class="text-[#6b7280]">Property</span><span class="font-medium">{{ selectedProperty }}</span></div>
                 <div class="flex justify-between"><span class="text-[#6b7280]">Amount</span><span class="font-bold text-lg">N{{ Number(amount).toLocaleString() }}</span></div>
                 <div class="flex justify-between"><span class="text-[#6b7280]">Processing Fee</span><span class="font-medium">N0.00</span></div>
-                <div class="border-t border-[#e5e7eb] pt-3 flex justify-between"><span class="text-[#1f2937] font-medium">Total</span><span class="font-bold text-[#B90B0B]">N{{ Number(amount).toLocaleString() }}</span></div>
+                <div class="border-t border-[#e5e7eb] pt-3 flex justify-between"><span class="text-[#1f2937] font-medium">Total</span><span class="font-bold text-[#2D5A27]">N{{ Number(amount).toLocaleString() }}</span></div>
               </div>
             </div>
           </div>

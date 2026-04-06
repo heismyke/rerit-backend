@@ -19,14 +19,16 @@ const revenueData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   datasets: [
     { label: 'Collected', data: [450, 520, 380, 650, 720, 580, 800, 750, 680, 850, 900, 950], borderColor: '#16a34a', backgroundColor: 'rgba(22, 163, 74, 0.1)', fill: true, tension: 0.3 },
-    { label: 'Outstanding', data: [120, 110, 130, 100, 90, 110, 80, 95, 85, 70, 60, 50], borderColor: '#B90B0B', backgroundColor: 'rgba(185, 11, 11, 0.1)', fill: true, tension: 0.3 },
+    { label: 'Outstanding', data: [120, 110, 130, 100, 90, 110, 80, 95, 85, 70, 60, 50], borderColor: '#2D5A27', backgroundColor: 'rgba(45, 90, 39, 0.1)', fill: true, tension: 0.3 },
   ],
 }
 
+const taxTypes = ['Property Tax', 'Land Use Charge', 'Development Levy', 'Ground Rent', 'Business Premises']
+
 const payments = ref([
-  { id: 'PAY-001', taxpayer: 'Emeka Okonkwo', property: 'PROP-001', amount: 'N2,500,000', date: '2024-01-15', method: 'Bank Transfer', status: 'Completed' },
-  { id: 'PAY-002', taxpayer: 'Adaobi Nnamdi', property: 'PROP-002', amount: 'N800,000', date: '2024-01-14', method: 'Card', status: 'Completed' },
-  { id: 'PAY-003', taxpayer: 'Chidi Okafor', property: 'PROP-003', amount: 'N1,800,000', date: '2024-01-13', method: 'USSD', status: 'Pending' },
+  { id: 'PAY-001', taxpayer: 'Emeka Okonkwo', property: 'PROP-001', amount: 'N2,500,000', date: '2024-01-15', method: 'Bank Transfer', status: 'Completed', taxType: 'Property Tax' },
+  { id: 'PAY-002', taxpayer: 'Adaobi Nnamdi', property: 'PROP-002', amount: 'N800,000', date: '2024-01-14', method: 'Card', status: 'Completed', taxType: 'Land Use Charge' },
+  { id: 'PAY-003', taxpayer: 'Chidi Okafor', property: 'PROP-003', amount: 'N1,800,000', date: '2024-01-13', method: 'USSD', status: 'Pending', taxType: 'Development Levy' },
 ])
 
 const showToast = (message: string) => {
@@ -80,6 +82,7 @@ const viewPayment = (payment: any) => {
                   <th class="table-header">ID</th>
                   <th class="table-header">Taxpayer</th>
                   <th class="table-header">Property</th>
+                  <th class="table-header">Tax Type</th>
                   <th class="table-header">Amount</th>
                   <th class="table-header">Date</th>
                   <th class="table-header">Method</th>
@@ -92,6 +95,7 @@ const viewPayment = (payment: any) => {
                   <td class="table-cell font-medium">{{ p.id }}</td>
                   <td class="table-cell">{{ p.taxpayer }}</td>
                   <td class="table-cell text-[#6b7280]">{{ p.property }}</td>
+                  <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium bg-[#2D5A27]/10 text-[#2D5A27] rounded">{{ p.taxType }}</span></td>
                   <td class="table-cell">{{ p.amount }}</td>
                   <td class="table-cell text-[#9ca3af]">{{ p.date }}</td>
                   <td class="table-cell text-[#6b7280]">{{ p.method }}</td>
@@ -101,7 +105,7 @@ const viewPayment = (payment: any) => {
                   <td class="table-cell">
                     <div class="flex gap-2">
                       <button @click="viewPayment(p)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button>
-                      <button class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">Receipt</button>
+                      <button class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">Receipt</button>
                     </div>
                   </td>
                 </tr>
@@ -117,7 +121,7 @@ const viewPayment = (payment: any) => {
     <Teleport to="body">
       <div v-if="showExportModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-sm">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
             <h3 class="text-base font-semibold text-white">Export / Actions</h3>
             <button @click="showExportModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>

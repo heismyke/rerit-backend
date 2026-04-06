@@ -58,21 +58,21 @@ const security = ref({
               <button
                 @click="activeTab = 'profile'"
                 class="px-5 py-3 text-[11px] font-medium border-b-2 transition-colors"
-                :class="activeTab === 'profile' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'"
+                :class="activeTab === 'profile' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'"
               >
                 Profile
               </button>
               <button
                 @click="activeTab = 'notifications'"
                 class="px-5 py-3 text-[11px] font-medium border-b-2 transition-colors"
-                :class="activeTab === 'notifications' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'"
+                :class="activeTab === 'notifications' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'"
               >
                 Notifications
               </button>
               <button
                 @click="activeTab = 'security'"
                 class="px-5 py-3 text-[11px] font-medium border-b-2 transition-colors"
-                :class="activeTab === 'security' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'"
+                :class="activeTab === 'security' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'"
               >
                 Security
               </button>
@@ -82,7 +82,7 @@ const security = ref({
           <div class="p-6">
             <div v-if="activeTab === 'profile'" class="space-y-6">
               <div class="flex items-center gap-5 pb-6 border-b border-[#e5e7eb]">
-                <div class="w-16 h-16 bg-[#B90B0B] rounded-full flex items-center justify-center text-xl font-bold text-white">
+                <div class="w-16 h-16 bg-[#2D5A27] rounded-full flex items-center justify-center text-xl font-bold text-white">
                   CO
                 </div>
                 <button class="btn-secondary text-[11px]">Change Photo</button>
@@ -124,7 +124,7 @@ const security = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="notifications.email" type="checkbox" class="sr-only peer" />
-                  <div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
 
@@ -135,7 +135,7 @@ const security = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="notifications.sms" type="checkbox" class="sr-only peer" />
-                  <div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
 
@@ -146,7 +146,7 @@ const security = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="notifications.push" type="checkbox" class="sr-only peer" />
-                  <div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
             </div>
@@ -159,7 +159,7 @@ const security = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="security.twoFactor" type="checkbox" class="sr-only peer" />
-                  <div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
 

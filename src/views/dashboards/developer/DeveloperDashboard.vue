@@ -31,7 +31,7 @@ const barData = {
   datasets: [{
     label: 'Tax Paid',
     data: [2.0, 2.5, 1.8, 3.0, 2.2, 3.5],
-    backgroundColor: '#B90B0B',
+    backgroundColor: '#2D5A27',
     borderRadius: 2,
     borderSkipped: false,
   }],
@@ -41,7 +41,7 @@ const doughnutData = {
   labels: ['Properties', 'Outstanding', 'Pending'],
   datasets: [{
     data: [3, 1, 1],
-    backgroundColor: ['#B90B0B', '#f59e0b', '#d1d5db'],
+    backgroundColor: ['#2D5A27', '#f59e0b', '#d1d5db'],
     borderWidth: 0,
     cutout: '70%',
   }],
@@ -52,8 +52,8 @@ const lineData = {
   datasets: [{
     label: 'Property Value',
     data: [45, 48, 52, 58, 65],
-    borderColor: '#B90B0B',
-    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+    borderColor: '#2D5A27',
+    backgroundColor: 'rgba(45, 90, 39, 0.1)',
     fill: true,
     tension: 0.3,
     pointRadius: 0,
@@ -134,15 +134,15 @@ const notifications = [
               <h3 class="section-title mb-0">Quick Actions</h3>
             </div>
             <div class="p-4 grid grid-cols-3 gap-3">
-              <button @click="router.push('/developer/notices')" class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#B90B0B] hover:bg-red-50/30 transition">
+              <button @click="router.push('/developer/notices')" class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#2D5A27] hover:bg-red-50/30 transition">
                 <p class="text-xs font-medium text-[#1f2937]">Respond to Notice</p>
                 <p class="text-[11px] text-[#9ca3af] mt-1">View & respond</p>
               </button>
-              <button @click="router.push('/developer/payments')" class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#B90B0B] hover:bg-red-50/30 transition">
+              <button @click="router.push('/developer/payments')" class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#2D5A27] hover:bg-red-50/30 transition">
                 <p class="text-xs font-medium text-[#1f2937]">Make Payment</p>
                 <p class="text-[11px] text-[#9ca3af] mt-1">Pay tax dues</p>
               </button>
-              <button class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#B90B0B] hover:bg-red-50/30 transition">
+              <button class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#2D5A27] hover:bg-red-50/30 transition">
                 <p class="text-xs font-medium text-[#1f2937]">Request Refund</p>
                 <p class="text-[11px] text-[#9ca3af] mt-1">If applicable</p>
               </button>

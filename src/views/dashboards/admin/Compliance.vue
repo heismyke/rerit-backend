@@ -62,10 +62,10 @@ const runComplianceCheck = () => { showToast('Compliance check initiated for all
         <div class="bg-white border border-[#e5e7eb] rounded-lg">
           <div class="px-6 py-4 border-b border-[#e5e7eb] flex items-center justify-between">
             <div class="flex gap-4">
-              <button @click="activeTab = 'all'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'all' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">All</button>
-              <button @click="activeTab = 'compliant'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'compliant' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Compliant</button>
-              <button @click="activeTab = 'pending-review'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'pending-review' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Pending Review</button>
-              <button @click="activeTab = 'non-compliant'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'non-compliant' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Non-Compliant</button>
+              <button @click="activeTab = 'all'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'all' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">All</button>
+              <button @click="activeTab = 'compliant'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'compliant' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Compliant</button>
+              <button @click="activeTab = 'pending-review'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'pending-review' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Pending Review</button>
+              <button @click="activeTab = 'non-compliant'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'non-compliant' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Non-Compliant</button>
             </div>
             <button @click="runComplianceCheck" class="btn-primary text-[11px]">Run Compliance Check</button>
           </div>
@@ -79,7 +79,7 @@ const runComplianceCheck = () => { showToast('Compliance check initiated for all
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': item.status === 'Compliant', 'bg-yellow-50 text-yellow-700': item.status === 'Pending Review', 'bg-red-50 text-red-700': item.status === 'Non-Compliant'}">{{ item.status }}</span></td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': item.riskLevel === 'Low', 'bg-yellow-50 text-yellow-700': item.riskLevel === 'Medium', 'bg-red-50 text-red-700': item.riskLevel === 'High'}">{{ item.riskLevel }}</span></td>
                   <td class="table-cell text-[#9ca3af]">{{ item.lastChecked }}</td>
-                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(item)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">Review</button><button class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">Details</button></div></td>
+                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(item)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">Review</button><button class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">Details</button></div></td>
                 </tr>
               </tbody>
             </table>
@@ -101,7 +101,7 @@ const runComplianceCheck = () => { showToast('Compliance check initiated for all
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Compliance Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Compliance Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><p class="text-[11px] text-gray-500">ID</p><p class="text-[13px] font-medium">{{ selectedItem?.id }}</p></div>
@@ -115,7 +115,7 @@ const runComplianceCheck = () => { showToast('Compliance check initiated for all
           </div>
           <div class="px-6 py-4 border-t border-gray-100 flex justify-end gap-3">
             <button @click="showViewModal = false" class="px-4 py-2 text-[11px] bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Close</button>
-            <button @click="showToast('Compliance review submitted')" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Submit Review</button>
+            <button @click="showToast('Compliance review submitted')" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Submit Review</button>
           </div>
         </div>
       </div>

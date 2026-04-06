@@ -1,11 +1,11 @@
-# ReRiT - Real Estate Revenue & Information System
+# FCT-IRS - Real Estate Revenue & Information System
 
 <p align="center">
-  <img src="public/nrs.png" alt="NRS Logo" width="80" />
+  <img src="public/fct-irs.png" alt="FCT-IRS Logo" width="80" />
 </p>
 
 <p align="center">
-  <strong>National Revenue System (NRS)</strong><br>
+  <strong>FCT Internal Revenue Service</strong><br>
   Real Estate Tax & Revenue Collection Platform
 </p>
 
@@ -22,7 +22,7 @@
 
 > How can the government ensure that all properties are registered, correctly valued, assessed for tax, audited, and enforced efficiently, while maximizing compliance and minimizing revenue leakage?
 
-ReRiT is designed to address this challenge by providing a comprehensive platform for real estate revenue administration in Nigeria.
+FCT-IRS is designed to address this challenge by providing a comprehensive platform for real estate revenue administration in Nigeria.
 
 ---
 

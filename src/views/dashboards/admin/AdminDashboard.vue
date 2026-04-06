@@ -30,7 +30,7 @@ const handleLogout = () => {
 const lineData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   datasets: [
-    { label: 'Tax Revenue', data: [45, 52, 38, 65, 72, 58, 80, 75, 68, 85, 90, 95], borderColor: '#B90B0B', backgroundColor: 'rgba(185, 11, 11, 0.1)', fill: true, tension: 0.3, pointRadius: 3 },
+    { label: 'Tax Revenue', data: [45, 52, 38, 65, 72, 58, 80, 75, 68, 85, 90, 95], borderColor: '#2D5A27', backgroundColor: 'rgba(45, 90, 39, 0.1)', fill: true, tension: 0.3, pointRadius: 3 },
   ],
 }
 
@@ -39,7 +39,7 @@ const barData = {
   datasets: [{
     label: 'Properties',
     data: [1245, 892, 567, 423, 356, 298],
-    backgroundColor: '#B90B0B',
+    backgroundColor: '#2D5A27',
     borderRadius: 4,
   }],
 }
@@ -48,7 +48,7 @@ const doughnutData = {
   labels: ['Verified', 'Pending', 'Flagged', 'Under Review'],
   datasets: [{
     data: [4567, 1234, 456, 789],
-    backgroundColor: ['#16a34a', '#f59e0b', '#B90B0B', '#6366f1'],
+    backgroundColor: ['#16a34a', '#f59e0b', '#2D5A27', '#6366f1'],
     borderWidth: 0,
     cutout: '65%',
   }],
@@ -146,7 +146,7 @@ const getActivityColor = (type: string) => {
           <div class="card p-5">
             <div class="flex items-center justify-between mb-4">
               <h3 class="section-title mb-0">Risk Distribution</h3>
-              <span class="text-[11px] text-[#B90B0B] font-medium">2,782 Assessed</span>
+              <span class="text-[11px] text-[#2D5A27] font-medium">2,782 Assessed</span>
             </div>
             <div class="space-y-3">
               <div v-for="risk in riskDistribution" :key="risk.level" class="flex items-center gap-3">
@@ -162,7 +162,7 @@ const getActivityColor = (type: string) => {
           <div class="card p-5">
             <div class="flex items-center justify-between mb-4">
               <h3 class="section-title mb-0">High Risk Properties</h3>
-              <button @click="router.push('/admin/properties')" class="text-[11px] text-[#B90B0B] hover:underline">View All</button>
+              <button @click="router.push('/admin/properties')" class="text-[11px] text-[#2D5A27] hover:underline">View All</button>
             </div>
             <div class="space-y-2">
               <div v-for="prop in highRiskProperties" :key="prop.id" class="flex items-center justify-between py-2 border-b border-[#f3f4f6] last:border-0">

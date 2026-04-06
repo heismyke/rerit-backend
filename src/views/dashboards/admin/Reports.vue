@@ -63,7 +63,7 @@ const handleDownload = (report: any) => { showToast(`Downloading ${report.title}
       <main class="flex-1 p-6">
         <div class="grid grid-cols-4 gap-4 mb-6">
           <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">Total Reports</p><p class="text-2xl font-semibold text-[#1f2937] mt-1">{{ reports.length }}</p></div>
-          <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">This Month</p><p class="text-2xl font-semibold text-[#B90B0B] mt-1">{{ reports.filter(r => r.generatedAt.startsWith('2024-01')).length }}</p></div>
+          <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">This Month</p><p class="text-2xl font-semibold text-[#2D5A27] mt-1">{{ reports.filter(r => r.generatedAt.startsWith('2024-01')).length }}</p></div>
           <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">PDF Reports</p><p class="text-2xl font-semibold text-blue-600 mt-1">{{ reports.filter(r => r.format === 'PDF').length }}</p></div>
           <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">Excel Reports</p><p class="text-2xl font-semibold text-green-600 mt-1">{{ reports.filter(r => r.format === 'Excel').length }}</p></div>
         </div>
@@ -79,7 +79,7 @@ const handleDownload = (report: any) => { showToast(`Downloading ${report.title}
                   <td class="table-cell text-[#6b7280]">{{ report.generatedBy }}</td><td class="table-cell text-[#9ca3af]">{{ report.generatedAt }}</td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded" :class="{'bg-red-50 text-red-700': report.format === 'PDF', 'bg-green-50 text-green-700': report.format === 'Excel', 'bg-blue-50 text-blue-700': report.format === 'CSV'}">{{ report.format }}</span></td>
                   <td class="table-cell text-[#9ca3af]">{{ report.size }}</td>
-                  <td class="table-cell"><div class="flex gap-2"><button @click="handleDownload(report)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">Download</button><button @click="openViewModal(report)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">View</button></div></td>
+                  <td class="table-cell"><div class="flex gap-2"><button @click="handleDownload(report)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">Download</button><button @click="openViewModal(report)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">View</button></div></td>
                 </tr>
               </tbody>
             </table>
@@ -101,12 +101,12 @@ const handleDownload = (report: any) => { showToast(`Downloading ${report.title}
     <Teleport to="body">
       <div v-if="showGenerateModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Generate Report</h3><button @click="showGenerateModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Generate Report</h3><button @click="showGenerateModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Report Title</label><input v-model="newReport.title" type="text" placeholder="Enter report title" class="input-field w-full" /></div>
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Report Type</label><select v-model="newReport.type" class="input-field w-full"><option v-for="type in reportTypes" :key="type" :value="type">{{ type }}</option></select></div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showGenerateModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleGenerateReport" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Generate</button></div>
+          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showGenerateModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleGenerateReport" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Generate</button></div>
         </div>
       </div>
     </Teleport>
@@ -114,7 +114,7 @@ const handleDownload = (report: any) => { showToast(`Downloading ${report.title}
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Report Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Report Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><p class="text-[11px] text-gray-500">Report ID</p><p class="text-[13px] font-medium">{{ selectedReport?.id }}</p></div>
@@ -128,7 +128,7 @@ const handleDownload = (report: any) => { showToast(`Downloading ${report.title}
           </div>
           <div class="px-6 py-4 border-t border-gray-100 flex justify-end gap-3">
             <button @click="showViewModal = false" class="px-4 py-2 text-[11px] bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Close</button>
-            <button @click="handleDownload(selectedReport)" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Download</button>
+            <button @click="handleDownload(selectedReport)" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Download</button>
           </div>
         </div>
       </div>

@@ -61,12 +61,18 @@ const complianceMenu = [
 
 const getMenu = (roleId: RoleSlug) => {
   switch (roleId) {
-    case 'auditor': return auditorMenu
-    case 'admin': return adminMenu
-    case 'developer': return developerMenu
-    case 'surveyor': return surveyorMenu
-    case 'compliance': return complianceMenu
-    default: return []
+    case 'auditor':
+      return auditorMenu
+    case 'admin':
+      return adminMenu
+    case 'developer':
+      return developerMenu
+    case 'surveyor':
+      return surveyorMenu
+    case 'compliance':
+      return complianceMenu
+    default:
+      return []
   }
 }
 </script>
@@ -75,7 +81,7 @@ const getMenu = (roleId: RoleSlug) => {
   <aside class="sidebar w-56 bg-[#EEEEEE] flex flex-col">
     <div class="px-4 py-4 border-b border-gray-300">
       <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-full bg-[#B90B0B] flex items-center justify-center">
+        <div class="w-10 h-10 rounded-full bg-[#2D5A27] flex items-center justify-center">
           <span class="text-sm font-semibold text-white">{{ user?.name?.charAt(0) || 'U' }}</span>
         </div>
         <div class="flex-1 min-w-0">
@@ -85,7 +91,7 @@ const getMenu = (roleId: RoleSlug) => {
       </div>
     </div>
     <div class="px-4 py-3 border-b border-gray-300">
-      <h1 class="text-sm font-semibold text-[#1f2937] tracking-tight">ReRiT</h1>
+      <h1 class="text-sm font-semibold text-[#2D5A27] tracking-tight">FCT-IRS</h1>
       <p class="text-[10px] text-[#6b7280] mt-0.5">Revenue System</p>
     </div>
     <nav class="flex-1 p-4 overflow-y-auto">
@@ -103,7 +109,7 @@ const getMenu = (roleId: RoleSlug) => {
     </nav>
     <div class="p-4 border-t border-gray-300 shrink-0">
       <div class="flex flex-col items-center gap-2">
-        <img src="/nrs.png" alt="NRS" class="h-8 opacity-50" />
+        <img src="/fct-irs.svg" alt="FCT-IRS" class="h-8 opacity-50" />
         <p class="text-[11px] text-[#9ca3af]">v1.0.0</p>
       </div>
     </div>

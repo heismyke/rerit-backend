@@ -166,7 +166,7 @@ const handleDeleteProperty = () => {
                   <td class="table-cell">
                     <div class="flex gap-2">
                       <button @click="openViewModal(p)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button>
-                      <button @click="openEditModal(p)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">Edit</button>
+                      <button @click="openEditModal(p)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">Edit</button>
                     </div>
                   </td>
                 </tr>
@@ -194,7 +194,7 @@ const handleDeleteProperty = () => {
     <Teleport to="body">
       <div v-if="showAddModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
             <h3 class="text-base font-semibold text-white">Add Property</h3>
             <button @click="showAddModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>
@@ -232,7 +232,7 @@ const handleDeleteProperty = () => {
           </div>
           <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end">
             <button @click="showAddModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
-            <button @click="handleAddProperty" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Add Property</button>
+            <button @click="handleAddProperty" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Add Property</button>
           </div>
         </div>
       </div>
@@ -241,7 +241,7 @@ const handleDeleteProperty = () => {
     <Teleport to="body">
       <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
             <h3 class="text-base font-semibold text-white">Edit Property</h3>
             <button @click="showEditModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>
@@ -281,7 +281,7 @@ const handleDeleteProperty = () => {
             <button @click="handleDeleteProperty" class="px-4 py-2 text-[11px] text-red-600 border border-red-200 rounded-lg hover:bg-red-50">Delete</button>
             <div class="flex gap-3">
               <button @click="showEditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
-              <button @click="handleUpdateProperty" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Save Changes</button>
+              <button @click="handleUpdateProperty" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Save Changes</button>
             </div>
           </div>
         </div>
@@ -291,7 +291,7 @@ const handleDeleteProperty = () => {
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
             <h3 class="text-base font-semibold text-white">Property Details</h3>
             <button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>

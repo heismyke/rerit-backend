@@ -86,10 +86,10 @@ const handleDeleteUser = () => {
         <div class="bg-white border border-[#e5e7eb] rounded-lg">
           <div class="px-6 py-4 border-b border-[#e5e7eb] flex items-center justify-between">
             <div class="flex gap-4">
-              <button @click="activeTab = 'all'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'all' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">All Users</button>
-              <button @click="activeTab = 'active'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'active' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Active</button>
-              <button @click="activeTab = 'inactive'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'inactive' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Inactive</button>
-              <button @click="activeTab = 'pending'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'pending' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Pending</button>
+              <button @click="activeTab = 'all'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'all' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">All Users</button>
+              <button @click="activeTab = 'active'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'active' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Active</button>
+              <button @click="activeTab = 'inactive'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'inactive' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Inactive</button>
+              <button @click="activeTab = 'pending'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'pending' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Pending</button>
             </div>
             <button @click="openAddModal" class="btn-primary text-[11px]">Add User</button>
           </div>
@@ -99,11 +99,11 @@ const handleDeleteUser = () => {
               <thead><tr><th class="table-header">User ID</th><th class="table-header">Name</th><th class="table-header">Email</th><th class="table-header">Role</th><th class="table-header">Department</th><th class="table-header">Status</th><th class="table-header">Last Login</th><th class="table-header">Actions</th></tr></thead>
               <tbody class="divide-y divide-[#f3f4f6]">
                 <tr v-for="u in paginatedUsers" :key="u.id" class="hover:bg-[#f9fafb]">
-                  <td class="table-cell font-medium">{{ u.id }}</td><td class="table-cell">{{ u.name }}</td><td class="table-cell text-[#6b7280]">{{ u.email }}</td><td class="table-cell"><span class="px-2 py-0.5 text-[11px] bg-[#B90B0B]/10 text-[#B90B0B] rounded font-medium">{{ u.role }}</span></td>
+                  <td class="table-cell font-medium">{{ u.id }}</td><td class="table-cell">{{ u.name }}</td><td class="table-cell text-[#6b7280]">{{ u.email }}</td><td class="table-cell"><span class="px-2 py-0.5 text-[11px] bg-[#2D5A27]/10 text-[#2D5A27] rounded font-medium">{{ u.role }}</span></td>
                   <td class="table-cell text-[#9ca3af]">{{ u.department }}</td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': u.status === 'Active', 'bg-gray-100 text-gray-500': u.status === 'Inactive', 'bg-yellow-50 text-yellow-700': u.status === 'Pending'}">{{ u.status }}</span></td>
                   <td class="table-cell text-[#9ca3af]">{{ u.lastLogin }}</td>
-                  <td class="table-cell"><div class="flex gap-2"><button @click="openEditModal(u)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">Edit</button><button @click="openViewModal(u)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">View</button></div></td>
+                  <td class="table-cell"><div class="flex gap-2"><button @click="openEditModal(u)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">Edit</button><button @click="openViewModal(u)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">View</button></div></td>
                 </tr>
               </tbody>
             </table>
@@ -125,7 +125,7 @@ const handleDeleteUser = () => {
     <Teleport to="body">
       <div v-if="showAddModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Add User</h3><button @click="showAddModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Add User</h3><button @click="showAddModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Full Name</label><input v-model="newUser.name" type="text" placeholder="Enter name" class="input-field w-full" /></div>
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Email</label><input v-model="newUser.email" type="email" placeholder="Enter email" class="input-field w-full" /></div>
@@ -134,7 +134,7 @@ const handleDeleteUser = () => {
               <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Department</label><input v-model="newUser.department" type="text" placeholder="Enter department" class="input-field w-full" /></div>
             </div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showAddModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleAddUser" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Add User</button></div>
+          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showAddModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleAddUser" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Add User</button></div>
         </div>
       </div>
     </Teleport>
@@ -142,7 +142,7 @@ const handleDeleteUser = () => {
     <Teleport to="body">
       <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Edit User</h3><button @click="showEditModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Edit User</h3><button @click="showEditModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Full Name</label><input v-model="editUser.name" type="text" class="input-field w-full" /></div>
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Email</label><input v-model="editUser.email" type="email" class="input-field w-full" /></div>
@@ -152,7 +152,7 @@ const handleDeleteUser = () => {
               <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Status</label><select v-model="editUser.status" class="input-field w-full"><option>Active</option><option>Inactive</option><option>Pending</option></select></div>
             </div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-between"><button @click="handleDeleteUser" class="px-4 py-2 text-[11px] text-red-600 border border-red-200 rounded-lg hover:bg-red-50">Delete</button><div class="flex gap-3"><button @click="showEditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleUpdateUser" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Save</button></div></div>
+          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-between"><button @click="handleDeleteUser" class="px-4 py-2 text-[11px] text-red-600 border border-red-200 rounded-lg hover:bg-red-50">Delete</button><div class="flex gap-3"><button @click="showEditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleUpdateUser" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Save</button></div></div>
         </div>
       </div>
     </Teleport>
@@ -160,13 +160,13 @@ const handleDeleteUser = () => {
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">User Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">User Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><p class="text-[11px] text-gray-500">User ID</p><p class="text-[13px] font-medium">{{ selectedUser?.id }}</p></div>
               <div><p class="text-[11px] text-gray-500">Status</p><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': selectedUser?.status === 'Active', 'bg-gray-100 text-gray-500': selectedUser?.status === 'Inactive', 'bg-yellow-50 text-yellow-700': selectedUser?.status === 'Pending'}">{{ selectedUser?.status }}</span></div>
               <div><p class="text-[11px] text-gray-500">Name</p><p class="text-[13px] font-medium">{{ selectedUser?.name }}</p></div>
-              <div><p class="text-[11px] text-gray-500">Role</p><span class="px-2 py-0.5 text-[11px] bg-[#B90B0B]/10 text-[#B90B0B] rounded font-medium">{{ selectedUser?.role }}</span></div>
+              <div><p class="text-[11px] text-gray-500">Role</p><span class="px-2 py-0.5 text-[11px] bg-[#2D5A27]/10 text-[#2D5A27] rounded font-medium">{{ selectedUser?.role }}</span></div>
             </div>
             <div><p class="text-[11px] text-gray-500">Email</p><p class="text-[13px]">{{ selectedUser?.email }}</p></div>
             <div><p class="text-[11px] text-gray-500">Department</p><p class="text-[13px]">{{ selectedUser?.department }}</p></div>

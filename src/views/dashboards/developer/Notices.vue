@@ -69,7 +69,7 @@ const submitResponse = () => {
                   <td class="table-cell font-medium">{{ notice.id }}</td><td class="table-cell">{{ notice.title }}</td><td class="table-cell text-[#6b7280]">{{ notice.property }}</td><td class="table-cell">{{ notice.amount }}</td><td class="table-cell text-[#9ca3af]">{{ notice.dueDate }}</td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] bg-[#f3f4f6] text-[#6b7280] rounded">{{ notice.type }}</span></td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-yellow-50 text-yellow-700': notice.status === 'Pending', 'bg-blue-50 text-blue-700': notice.status === 'Responded', 'bg-green-50 text-green-700': notice.status === 'Resolved'}">{{ notice.status }}</span></td>
-                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(notice)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button v-if="notice.status === 'Pending'" @click="openRespondModal(notice)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#6a0707]">Respond</button></div></td>
+                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(notice)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button v-if="notice.status === 'Pending'" @click="openRespondModal(notice)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#6a0707]">Respond</button></div></td>
                 </tr>
               </tbody>
             </table>
@@ -91,7 +91,7 @@ const submitResponse = () => {
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Notice Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Notice Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><p class="text-[11px] text-gray-500">Notice ID</p><p class="text-[13px] font-medium">{{ selectedNotice?.id }}</p></div>
@@ -111,7 +111,7 @@ const submitResponse = () => {
     <Teleport to="body">
       <div v-if="showRespondModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Respond to Notice</h3><button @click="showRespondModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Respond to Notice</h3><button @click="showRespondModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div class="bg-[#f9fafb] rounded-lg p-4">
               <p class="text-[11px] text-gray-500">Notice</p>
@@ -120,7 +120,7 @@ const submitResponse = () => {
             </div>
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Your Response</label><textarea v-model="response" rows="4" placeholder="Enter your response..." class="input-field w-full"></textarea></div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showRespondModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="submitResponse" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Submit Response</button></div>
+          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showRespondModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="submitResponse" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Submit Response</button></div>
         </div>
       </div>
     </Teleport>

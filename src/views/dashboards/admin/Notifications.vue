@@ -58,15 +58,15 @@ const openViewModal = (n: any) => { selectedNotification.value = n; if (!n.isRea
       <main class="flex-1 p-6">
         <div class="grid grid-cols-4 gap-4 mb-6">
           <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">Total Notifications</p><p class="text-2xl font-semibold text-[#1f2937] mt-1">{{ stats.total }}</p></div>
-          <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">Unread</p><p class="text-2xl font-semibold text-[#B90B0B] mt-1">{{ stats.unread }}</p></div>
+          <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">Unread</p><p class="text-2xl font-semibold text-[#2D5A27] mt-1">{{ stats.unread }}</p></div>
           <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">System</p><p class="text-2xl font-semibold text-blue-600 mt-1">{{ stats.system }}</p></div>
           <div class="bg-white border border-[#e5e7eb] rounded-lg p-4"><p class="text-[11px] text-[#6b7280]">Alerts</p><p class="text-2xl font-semibold text-yellow-600 mt-1">{{ stats.alerts }}</p></div>
         </div>
         <div class="bg-white border border-[#e5e7eb] rounded-lg">
           <div class="px-6 py-4 border-b border-[#e5e7eb] flex items-center justify-between">
             <div class="flex gap-4">
-              <button @click="activeTab = 'all'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'all' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">All</button>
-              <button v-for="type in types" :key="type" @click="activeTab = type.toLowerCase()" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === type.toLowerCase() ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">{{ type }}</button>
+              <button @click="activeTab = 'all'" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === 'all' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">All</button>
+              <button v-for="type in types" :key="type" @click="activeTab = type.toLowerCase()" class="text-[13px] font-medium pb-1 border-b-2" :class="activeTab === type.toLowerCase() ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">{{ type }}</button>
             </div>
             <button @click="markAllAsRead" class="btn-secondary text-[11px]">Mark All as Read</button>
           </div>
@@ -75,7 +75,7 @@ const openViewModal = (n: any) => { selectedNotification.value = n; if (!n.isRea
             <div v-for="notification in paginatedNotifications" :key="notification.id" class="p-4 hover:bg-[#f9fafb]" :class="{ 'bg-blue-50/50': !notification.isRead }">
               <div class="flex items-start justify-between">
                 <div class="flex items-start gap-3">
-                  <div class="mt-1"><div class="w-2 h-2 rounded-full" :class="notification.isRead ? 'bg-transparent' : 'bg-[#B90B0B]'"></div></div>
+                  <div class="mt-1"><div class="w-2 h-2 rounded-full" :class="notification.isRead ? 'bg-transparent' : 'bg-[#2D5A27]'"></div></div>
                   <div>
                     <div class="flex items-center gap-2">
                       <span class="px-2 py-0.5 text-[11px] font-medium rounded" :class="{'bg-blue-50 text-blue-700': notification.type === 'System', 'bg-yellow-50 text-yellow-700': notification.type === 'Compliance', 'bg-green-50 text-green-700': notification.type === 'Payment', 'bg-purple-50 text-purple-700': notification.type === 'Audit', 'bg-orange-50 text-orange-700': notification.type === 'Survey', 'bg-gray-100 text-gray-700': notification.type === 'User'}">{{ notification.type }}</span>
@@ -87,7 +87,7 @@ const openViewModal = (n: any) => { selectedNotification.value = n; if (!n.isRea
                 </div>
                 <div class="flex gap-2">
                   <button v-if="!notification.isRead" @click="markAsRead(notification.id)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">Mark Read</button>
-                  <button @click="openViewModal(notification)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">View</button>
+                  <button @click="openViewModal(notification)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">View</button>
                 </div>
               </div>
             </div>
@@ -109,7 +109,7 @@ const openViewModal = (n: any) => { selectedNotification.value = n; if (!n.isRea
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Notification Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Notification Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><p class="text-[11px] text-gray-500">ID</p><p class="text-[13px] font-medium">{{ selectedNotification?.id }}</p></div>

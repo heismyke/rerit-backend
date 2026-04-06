@@ -73,10 +73,10 @@ const securitySettings = ref({
           </div>
           
           <div class="flex border-b border-[#e5e7eb]">
-            <button @click="activeSection = 'general'" class="px-6 py-3 text-[13px] font-medium border-b-2" :class="activeSection === 'general' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">General</button>
-            <button @click="activeSection = 'tax'" class="px-6 py-3 text-[13px] font-medium border-b-2" :class="activeSection === 'tax' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Tax Configuration</button>
-            <button @click="activeSection = 'notifications'" class="px-6 py-3 text-[13px] font-medium border-b-2" :class="activeSection === 'notifications' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Notifications</button>
-            <button @click="activeSection = 'security'" class="px-6 py-3 text-[13px] font-medium border-b-2" :class="activeSection === 'security' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280]'">Security</button>
+            <button @click="activeSection = 'general'" class="px-6 py-3 text-[13px] font-medium border-b-2" :class="activeSection === 'general' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">General</button>
+            <button @click="activeSection = 'tax'" class="px-6 py-3 text-[13px] font-medium border-b-2" :class="activeSection === 'tax' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Tax Configuration</button>
+            <button @click="activeSection = 'notifications'" class="px-6 py-3 text-[13px] font-medium border-b-2" :class="activeSection === 'notifications' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Notifications</button>
+            <button @click="activeSection = 'security'" class="px-6 py-3 text-[13px] font-medium border-b-2" :class="activeSection === 'security' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280]'">Security</button>
           </div>
 
           <div class="p-6">
@@ -158,7 +158,7 @@ const securitySettings = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="notificationSettings.emailNotifications" type="checkbox" class="sr-only peer">
-                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
               <div class="flex items-center justify-between py-3 border-b border-[#f3f4f6]">
@@ -168,7 +168,7 @@ const securitySettings = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="notificationSettings.smsNotifications" type="checkbox" class="sr-only peer">
-                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
               <div class="flex items-center justify-between py-3 border-b border-[#f3f4f6]">
@@ -178,7 +178,7 @@ const securitySettings = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="notificationSettings.systemAlerts" type="checkbox" class="sr-only peer">
-                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
               <div class="flex items-center justify-between py-3 border-b border-[#f3f4f6]">
@@ -188,7 +188,7 @@ const securitySettings = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="notificationSettings.auditReminders" type="checkbox" class="sr-only peer">
-                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
               <div class="flex items-center justify-between py-3">
@@ -198,7 +198,7 @@ const securitySettings = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="notificationSettings.complianceAlerts" type="checkbox" class="sr-only peer">
-                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
             </div>
@@ -225,7 +225,7 @@ const securitySettings = ref({
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input v-model="securitySettings.twoFactorAuth" type="checkbox" class="sr-only peer">
-                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div>
+                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div>
                 </label>
               </div>
             </div>

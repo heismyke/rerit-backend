@@ -31,7 +31,7 @@ const barData = {
   datasets: [{
     label: 'Surveys',
     data: [15, 12, 10, 5, 3],
-    backgroundColor: '#B90B0B',
+    backgroundColor: '#2D5A27',
     borderRadius: 2,
     borderSkipped: false,
   }],
@@ -52,8 +52,8 @@ const lineData = {
   datasets: [{
     label: 'Submissions',
     data: [8, 12, 6, 15, 10, 12],
-    borderColor: '#B90B0B',
-    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+    borderColor: '#2D5A27',
+    backgroundColor: 'rgba(45, 90, 39, 0.1)',
     fill: true,
     tension: 0.3,
     pointRadius: 0,

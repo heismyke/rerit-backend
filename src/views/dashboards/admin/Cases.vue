@@ -95,7 +95,7 @@ const handleDeleteCase = () => {
                     </div>
                   </td>
                   <td class="table-cell text-[#6b7280]">{{ c.assigned }}</td><td class="table-cell text-[#9ca3af]">{{ c.date }}</td>
-                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(c)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button @click="openEditModal(c)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">Edit</button></div></td>
+                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(c)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button @click="openEditModal(c)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">Edit</button></div></td>
                 </tr>
               </tbody>
             </table>
@@ -117,7 +117,7 @@ const handleDeleteCase = () => {
     <Teleport to="body">
       <div v-if="showAddModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Create Case</h3><button @click="showAddModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Create Case</h3><button @click="showAddModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Title</label><input v-model="newCase.title" type="text" placeholder="Enter case title" class="input-field w-full" /></div>
             <div class="grid grid-cols-2 gap-4">
@@ -126,7 +126,7 @@ const handleDeleteCase = () => {
             </div>
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Assigned To</label><input v-model="newCase.assigned" type="text" placeholder="Enter name" class="input-field w-full" /></div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showAddModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleAddCase" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Create</button></div>
+          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end"><button @click="showAddModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleAddCase" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Create</button></div>
         </div>
       </div>
     </Teleport>
@@ -134,7 +134,7 @@ const handleDeleteCase = () => {
     <Teleport to="body">
       <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Edit Case</h3><button @click="showEditModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Edit Case</h3><button @click="showEditModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Title</label><input v-model="editCase.title" type="text" class="input-field w-full" /></div>
             <div class="grid grid-cols-2 gap-4">
@@ -146,7 +146,7 @@ const handleDeleteCase = () => {
               <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Assigned To</label><input v-model="editCase.assigned" type="text" class="input-field w-full" /></div>
             </div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-between"><button @click="handleDeleteCase" class="px-4 py-2 text-[11px] text-red-600 border border-red-200 rounded-lg hover:bg-red-50">Delete</button><div class="flex gap-3"><button @click="showEditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleUpdateCase" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Save</button></div></div>
+          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-between"><button @click="handleDeleteCase" class="px-4 py-2 text-[11px] text-red-600 border border-red-200 rounded-lg hover:bg-red-50">Delete</button><div class="flex gap-3"><button @click="showEditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleUpdateCase" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Save</button></div></div>
         </div>
       </div>
     </Teleport>
@@ -154,7 +154,7 @@ const handleDeleteCase = () => {
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Case Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Case Details</h3><button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button></div>
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><p class="text-[11px] text-gray-500">Case ID</p><p class="text-[13px] font-medium">{{ selectedCase?.id }}</p></div>

@@ -96,7 +96,7 @@ const getAIRecommendations = () => {
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-red-50 text-red-700': flag.priority === 'Critical', 'bg-orange-50 text-orange-700': flag.priority === 'High', 'bg-yellow-50 text-yellow-700': flag.priority === 'Medium'}">{{ flag.priority }}</span></td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-blue-50 text-blue-700': flag.status === 'Under Investigation', 'bg-yellow-50 text-yellow-700': flag.status === 'Pending Review', 'bg-green-50 text-green-700': flag.status === 'Resolved'}">{{ flag.status }}</span></td>
                   <td class="table-cell text-[#9ca3af]">{{ flag.flaggedDate }}</td><td class="table-cell">{{ flag.investigator }}</td>
-                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(flag)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button @click="startInvestigation(flag)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#6a0707]">Investigate</button></div></td>
+                  <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(flag)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button @click="startInvestigation(flag)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#6a0707]">Investigate</button></div></td>
                 </tr>
               </tbody>
             </table>
@@ -118,7 +118,7 @@ const getAIRecommendations = () => {
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl my-8">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
             <h3 class="text-base font-semibold text-white">Property Investigation Details</h3>
             <button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>
@@ -180,7 +180,7 @@ const getAIRecommendations = () => {
                   </div>
                   <div>
                     <p class="text-[10px] text-[#9ca3af]">Estimated Rent (Market)</p>
-                    <input v-model="estimatedRent" type="text" placeholder="N0" class="w-full px-2 py-1 text-[13px] font-semibold border border-[#d1d5db] rounded focus:ring-1 focus:ring-[#B90B0B] focus:border-transparent" />
+                    <input v-model="estimatedRent" type="text" placeholder="N0" class="w-full px-2 py-1 text-[13px] font-semibold border border-[#d1d5db] rounded focus:ring-1 focus:ring-[#2D5A27] focus:border-transparent" />
                   </div>
                   <div v-if="calculateComplianceGap !== null">
                     <p class="text-[10px] text-[#9ca3af]">Compliance Gap</p>
@@ -201,7 +201,7 @@ const getAIRecommendations = () => {
               <div class="w-full h-64 bg-[#EEEEEE] rounded-lg overflow-hidden relative">
                 <div class="absolute inset-0 flex items-center justify-center">
                   <div class="text-center">
-                    <div class="w-16 h-16 bg-[#B90B0B] rounded-full flex items-center justify-center mx-auto mb-2 shadow-lg">
+                    <div class="w-16 h-16 bg-[#2D5A27] rounded-full flex items-center justify-center mx-auto mb-2 shadow-lg">
                       <span class="text-white text-2xl">📍</span>
                     </div>
                     <p class="text-[13px] font-semibold text-[#1f2937]">{{ selectedFlag?.location }}</p>
@@ -216,8 +216,8 @@ const getAIRecommendations = () => {
 
             <div>
               <h4 class="text-[11px] text-[#6b7280] mb-2 font-semibold">AI INSIGHTS</h4>
-              <textarea v-model="aiInsights" rows="5" :placeholder="`Enter the property details above to obtain insights...\n\nExample: Analyze this property for tax compliance risks based on the declared vs estimated value discrepancy.`" class="w-full px-4 py-3 border border-[#e5e7eb] rounded-lg text-[13px] resize-none focus:ring-2 focus:ring-[#B90B0B] focus:border-transparent"></textarea>
-              <button @click="getAIRecommendations" class="mt-3 px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010] flex items-center gap-2">
+              <textarea v-model="aiInsights" rows="5" :placeholder="`Enter the property details above to obtain insights...\n\nExample: Analyze this property for tax compliance risks based on the declared vs estimated value discrepancy.`" class="w-full px-4 py-3 border border-[#e5e7eb] rounded-lg text-[13px] resize-none focus:ring-2 focus:ring-[#2D5A27] focus:border-transparent"></textarea>
+              <button @click="getAIRecommendations" class="mt-3 px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#991010] flex items-center gap-2">
                 <span>🤖</span> Get AI Recommendations
               </button>
             </div>
@@ -232,7 +232,7 @@ const getAIRecommendations = () => {
                 <button @click="escalateAudit" class="px-4 py-2 text-[11px] bg-[#1f2937] text-white rounded-lg hover:bg-[#374151]">
                   Escalate Audit
                 </button>
-                <button @click="getComplianceNotice" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">
+                <button @click="getComplianceNotice" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#991010]">
                   Get Compliance Notice
                 </button>
               </div>

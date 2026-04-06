@@ -121,7 +121,7 @@ const getRiskColor = (level: string) => {
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="getRiskColor(property.riskLevel)">{{ property.riskLevel }} ({{ property.riskScore }})</span></td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': property.status === 'Verified', 'bg-yellow-50 text-yellow-700': property.status === 'Pending', 'bg-red-50 text-red-700': property.status === 'Flagged', 'bg-blue-50 text-blue-700': property.status === 'Under Audit'}">{{ property.status }}</span></td>
                   <td class="table-cell text-[#9ca3af]">{{ property.lastAudit }}</td>
-                  <td class="table-cell"><button @click="openViewModal(property)" class="px-3 py-1 text-[11px] bg-[#B90B0B] text-white rounded hover:bg-[#991010]">Review</button></td>
+                  <td class="table-cell"><button @click="openViewModal(property)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">Review</button></td>
                 </tr>
               </tbody>
             </table>
@@ -143,7 +143,7 @@ const getRiskColor = (level: string) => {
     <Teleport to="body">
       <div v-if="showViewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl my-8">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
             <h3 class="text-base font-semibold text-white">Property Review - {{ selectedProperty?.id }}</h3>
             <button @click="showViewModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>
@@ -191,7 +191,7 @@ const getRiskColor = (level: string) => {
                 <div class="text-[11px] text-[#6b7280]">
                   {{ selectedProperty?.status === 'Flagged' ? 'This property has been flagged for investigation.' : selectedProperty?.status === 'Verified' ? 'This property appears compliant.' : 'This property requires review.' }}
                 </div>
-                <button v-if="selectedProperty?.status === 'Flagged' || selectedProperty?.status === 'Pending'" @click="openAuditModal" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">
+                <button v-if="selectedProperty?.status === 'Flagged' || selectedProperty?.status === 'Pending'" @click="openAuditModal" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">
                   Create Audit Case
                 </button>
                 <button v-else class="px-4 py-2 text-[11px] bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
@@ -210,7 +210,7 @@ const getRiskColor = (level: string) => {
     <Teleport to="body">
       <div v-if="showAuditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#B90B0B] px-6 py-4 flex justify-between items-center">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
             <h3 class="text-base font-semibold text-white">Create Audit Case</h3>
             <button @click="showAuditModal = false" class="text-white/80 hover:text-white">✕</button>
           </div>
@@ -251,7 +251,7 @@ const getRiskColor = (level: string) => {
           </div>
           <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end">
             <button @click="showAuditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
-            <button @click="startAudit" class="px-4 py-2 text-[11px] bg-[#B90B0B] text-white rounded-lg hover:bg-[#991010]">Create Case & Assign</button>
+            <button @click="startAudit" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Create Case & Assign</button>
           </div>
         </div>
       </div>

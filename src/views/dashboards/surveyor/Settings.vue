@@ -47,16 +47,16 @@ const security = ref({ twoFactor: false, sessionTimeout: '30' })
         <div class="bg-white border border-[#e5e7eb] rounded-lg max-w-4xl">
           <div class="border-b border-[#e5e7eb]">
             <nav class="flex">
-              <button @click="activeTab = 'profile'" class="px-5 py-3 text-[11px] font-medium border-b-2" :class="activeTab === 'profile' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'">Profile</button>
-              <button @click="activeTab = 'notifications'" class="px-5 py-3 text-[11px] font-medium border-b-2" :class="activeTab === 'notifications' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'">Notifications</button>
-              <button @click="activeTab = 'security'" class="px-5 py-3 text-[11px] font-medium border-b-2" :class="activeTab === 'security' ? 'border-[#B90B0B] text-[#B90B0B]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'">Security</button>
+              <button @click="activeTab = 'profile'" class="px-5 py-3 text-[11px] font-medium border-b-2" :class="activeTab === 'profile' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'">Profile</button>
+              <button @click="activeTab = 'notifications'" class="px-5 py-3 text-[11px] font-medium border-b-2" :class="activeTab === 'notifications' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'">Notifications</button>
+              <button @click="activeTab = 'security'" class="px-5 py-3 text-[11px] font-medium border-b-2" :class="activeTab === 'security' ? 'border-[#2D5A27] text-[#2D5A27]' : 'border-transparent text-[#6b7280] hover:text-[#1f2937]'">Security</button>
             </nav>
           </div>
 
           <div class="p-6">
             <div v-if="activeTab === 'profile'" class="space-y-6">
               <div class="flex items-center gap-5 pb-6 border-b border-[#e5e7eb]">
-                <div class="w-16 h-16 bg-[#B90B0B] rounded-full flex items-center justify-center text-xl font-bold text-white">AI</div>
+                <div class="w-16 h-16 bg-[#2D5A27] rounded-full flex items-center justify-center text-xl font-bold text-white">AI</div>
                 <button class="btn-secondary text-[11px]"> Change Photo</button>
               </div>
               <div class="grid grid-cols-2 gap-5">
@@ -72,22 +72,22 @@ const security = ref({ twoFactor: false, sessionTimeout: '30' })
             <div v-if="activeTab === 'notifications'" class="space-y-0">
               <div class="flex items-center justify-between py-4 border-b border-[#e5e7eb]">
                 <div><p class="text-sm font-medium text-[#1f2937]">Email Notifications</p><p class="text-xs text-[#9ca3af]">Receive updates via email</p></div>
-                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.email" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div></label>
+                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.email" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
               </div>
               <div class="flex items-center justify-between py-4 border-b border-[#e5e7eb]">
                 <div><p class="text-sm font-medium text-[#1f2937]">SMS Notifications</p><p class="text-xs text-[#9ca3af]">Receive alerts via SMS</p></div>
-                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.sms" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div></label>
+                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.sms" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
               </div>
               <div class="flex items-center justify-between py-4">
                 <div><p class="text-sm font-medium text-[#1f2937]">Push Notifications</p><p class="text-xs text-[#9ca3af]">Browser notifications</p></div>
-                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.push" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div></label>
+                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.push" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
               </div>
             </div>
 
             <div v-if="activeTab === 'security'" class="space-y-6">
               <div class="flex items-center justify-between py-4 border-b border-[#e5e7eb]">
                 <div><p class="text-sm font-medium text-[#1f2937]">Two-Factor Authentication</p><p class="text-xs text-[#9ca3af]">Add extra security</p></div>
-                <label class="relative inline-flex items-center cursor-pointer"><input v-model="security.twoFactor" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#B90B0B]"></div></label>
+                <label class="relative inline-flex items-center cursor-pointer"><input v-model="security.twoFactor" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
               </div>
               <div class="py-4 border-b border-[#e5e7eb]">
                 <label class="block text-[11px] font-medium text-[#6b7280] mb-2">Session Timeout</label>

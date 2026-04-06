@@ -28,7 +28,7 @@ const handleLogout = () => {
 const lineData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   datasets: [
-    { label: 'Audit Cases', data: [45, 52, 38, 65, 72, 58, 80, 75, 68, 85, 90, 95], borderColor: '#B90B0B', backgroundColor: 'rgba(185, 11, 11, 0.1)', fill: true, tension: 0.3, pointRadius: 3 },
+    { label: 'Audit Cases', data: [45, 52, 38, 65, 72, 58, 80, 75, 68, 85, 90, 95], borderColor: '#2D5A27', backgroundColor: 'rgba(45, 90, 39, 0.1)', fill: true, tension: 0.3, pointRadius: 3 },
   ],
 }
 
@@ -37,7 +37,7 @@ const histogramData = {
   datasets: [{
     label: 'High Risk Cases',
     data: [24, 18, 15, 12, 10, 8],
-    backgroundColor: '#B90B0B',
+    backgroundColor: '#2D5A27',
     borderRadius: 4,
   }],
 }
