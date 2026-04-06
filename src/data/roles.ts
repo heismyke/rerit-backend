@@ -14,16 +14,10 @@ export const roles: Role[] = [
     icon: '◈',
   },
   {
-    id: 'developer',
-    name: 'Real Estate Developer (Tax Payer)',
+    id: 'taxpayer',
+    name: 'Tax Payer',
     description: 'Manage your property portfolio and tax obligations',
     icon: '◫',
-  },
-  {
-    id: 'surveyor',
-    name: 'Surveyor',
-    description: 'Submit property surveys and valuations',
-    icon: '◎',
   },
   {
     id: 'compliance',
@@ -41,8 +35,7 @@ export const getRouteByRoleId = (id: RoleSlug): string => {
   const routes: Record<RoleSlug, string> = {
     admin: '/admin',
     auditor: '/auditor',
-    developer: '/developer',
-    surveyor: '/surveyor',
+    taxpayer: '/taxpayer',
     compliance: '/compliance',
   }
   return routes[id]

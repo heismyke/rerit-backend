@@ -19,12 +19,12 @@ const showAuditModal = ref(false)
 const selectedProperty = ref<any>(null)
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
-const newAudit = ref({ priority: 'Medium', dueDate: '', notes: '', assignedSurveyor: '' })
+const newAudit = ref({ priority: 'Medium', dueDate: '', notes: '' })
 
 const auditCases = ref([
-  { id: 'AUD-2024-001', property: 'Plot 42, Victoria Island', owner: 'Emeka Okonkwo', auditor: 'John Smith', priority: 'High', status: 'In Progress', started: '2024-01-10', due: '2024-01-25', surveyorAssigned: 'Agent A' },
-  { id: 'AUD-2024-002', property: 'Block 7, Lekki Phase 2', owner: 'Adaobi Nnamdi', auditor: 'Sarah Johnson', priority: 'Medium', status: 'Pending', started: '2024-01-12', due: '2024-01-30', surveyorAssigned: 'Agent B' },
-  { id: 'AUD-2024-003', property: '15 Admiralty Way, Lekki', owner: 'Chidi Okafor', auditor: 'John Smith', priority: 'Low', status: 'Completed', started: '2024-01-05', due: '2024-01-20', surveyorAssigned: 'Agent A' },
+  { id: 'AUD-2024-001', property: 'Plot 42, Victoria Island', owner: 'Emeka Okonkwo', auditor: 'John Smith', priority: 'High', status: 'In Progress', started: '2024-01-10', due: '2024-01-25' },
+  { id: 'AUD-2024-002', property: 'Block 7, Lekki Phase 2', owner: 'Adaobi Nnamdi', auditor: 'Sarah Johnson', priority: 'Medium', status: 'Pending', started: '2024-01-12', due: '2024-01-30' },
+  { id: 'AUD-2024-003', property: '15 Admiralty Way, Lekki', owner: 'Chidi Okafor', auditor: 'John Smith', priority: 'Low', status: 'Completed', started: '2024-01-05', due: '2024-01-20' },
 ])
 
 const properties = ref([
@@ -52,7 +52,7 @@ const showToast = (message: string) => { toast.value = { show: true, message }; 
 
 const openViewModal = (p: any) => {
   selectedProperty.value = p
-  newAudit.value = { priority: 'Medium', dueDate: '', notes: '', assignedSurveyor: '' }
+  newAudit.value = { priority: 'Medium', dueDate: '', notes: '' }
   showViewModal.value = true
 }
 
@@ -72,13 +72,12 @@ const startAudit = () => {
     priority: newAudit.value.priority,
     status: 'Pending',
     started: new Date().toISOString().split('T')[0],
-    due: newAudit.value.dueDate,
-    surveyorAssigned: newAudit.value.assignedSurveyor
+    due: newAudit.value.dueDate
   })
   const propIndex = properties.value.findIndex(p => p.id === selectedProperty.value.id)
   if (propIndex !== -1) properties.value[propIndex].status = 'Under Audit'
   showAuditModal.value = false
-  showToast('Audit case ' + newId + ' created and assigned to Surveyor')
+  showToast('Audit case ' + newId + ' created')
 }
 
 const getRiskColor = (level: string) => {
@@ -236,22 +235,13 @@ const getRiskColor = (level: string) => {
               </div>
             </div>
             <div>
-              <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Assign to Surveyor</label>
-              <select v-model="newAudit.assignedSurveyor" class="input-field w-full">
-                <option value="">Select Surveyor</option>
-                <option>Agent A (Ibrahim Bello)</option>
-                <option>Agent B (Fatima Sani)</option>
-                <option>Agent C (Kunle Adeyemi)</option>
-              </select>
-            </div>
-            <div>
               <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Notes</label>
               <textarea v-model="newAudit.notes" rows="3" placeholder="Add notes about this audit case..." class="input-field w-full resize-none"></textarea>
             </div>
           </div>
           <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end">
             <button @click="showAuditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
-            <button @click="startAudit" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Create Case & Assign</button>
+            <button @click="startAudit" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Create Case</button>
           </div>
         </div>
       </div>

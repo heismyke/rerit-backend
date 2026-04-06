@@ -1,4 +1,4 @@
-export type RoleSlug = 'admin' | 'auditor' | 'developer' | 'surveyor' | 'compliance'
+export type RoleSlug = 'admin' | 'auditor' | 'taxpayer' | 'compliance'
 
 export interface Role {
   id: RoleSlug

@@ -22,7 +22,7 @@ const notifications = ref([
   { id: 'N-002', type: 'Compliance', title: 'New Compliance Alert', message: '15 properties flagged for review in Lagos State.', isRead: false, createdAt: '2024-01-15 08:15' },
   { id: 'N-003', type: 'Payment', title: 'Large Payment Received', message: 'Nigerian Holdings Ltd paid N25,000,000 for property tax.', isRead: true, createdAt: '2024-01-14 16:45' },
   { id: 'N-004', type: 'Audit', title: 'Audit Report Ready', message: 'Q4 2023 audit report has been generated and is ready for review.', isRead: true, createdAt: '2024-01-14 14:30' },
-  { id: 'N-005', type: 'Survey', title: 'Survey Submission', message: 'New survey submitted by Surveyor Chukwudi Okafor for review.', isRead: false, createdAt: '2024-01-14 11:00' },
+  { id: 'N-005', type: 'Compliance', title: 'Compliance Review', message: 'New compliance review submitted for approval.', isRead: false, createdAt: '2024-01-14 11:00' },
   { id: 'N-006', type: 'User', title: 'New User Registration', message: 'Amina Yusuf registered as Auditor. Awaiting approval.', isRead: false, createdAt: '2024-01-13 10:00' },
   { id: 'N-007', type: 'System', title: 'Database Backup Complete', message: 'Weekly database backup completed successfully.', isRead: true, createdAt: '2024-01-13 06:00' },
   { id: 'N-008', type: 'Compliance', title: 'Compliance Report Due', message: 'Monthly compliance report is due in 5 days.', isRead: true, createdAt: '2024-01-12 09:00' },

@@ -29,7 +29,7 @@ const handleLogout = () => {
 const barData = {
   labels: ['Undeclared', 'Evasion', 'Forgery', 'Discrepancy', 'Other'],
   datasets: [{
-    label: 'Cases',
+    label: 'Flags',
     data: [25, 18, 12, 20, 14],
     backgroundColor: '#2D5A27',
     borderRadius: 2,
@@ -51,21 +51,21 @@ const lineData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
   datasets: [
     { label: 'Resolved', data: [10, 15, 12, 18, 22, 25], borderColor: '#16a34a', backgroundColor: 'rgba(22, 163, 74, 0.1)', fill: true, tension: 0.3, pointRadius: 0 },
-    { label: 'New Cases', data: [8, 12, 14, 16, 18, 20], borderColor: '#2D5A27', backgroundColor: 'rgba(45, 90, 39, 0.1)', fill: true, tension: 0.3, pointRadius: 0 },
+    { label: 'New Flags', data: [8, 12, 14, 16, 18, 20], borderColor: '#2D5A27', backgroundColor: 'rgba(45, 90, 39, 0.1)', fill: true, tension: 0.3, pointRadius: 0 },
   ],
 }
 
 const stats = [
-  { label: 'Total Cases', value: '89' },
-  { label: 'Under Investigation', value: '12' },
+  { label: 'Total Flags', value: '89' },
+  { label: 'Under Review', value: '12' },
   { label: 'Resolved', value: '72' },
   { label: 'Escalated', value: '5' },
 ]
 
-const recentCases = [
-  { id: 'CASE-001', title: 'Undeclared Property', location: 'Lekki Phase 2', priority: 'High', status: 'Active' },
-  { id: 'CASE-002', title: 'Tax Evasion Suspected', location: 'Victoria Island', priority: 'Critical', status: 'Under Review' },
-  { id: 'CASE-003', title: 'Document Forgery', location: 'Ikoyi', priority: 'Medium', status: 'Resolved' },
+const recentFlags = [
+  { id: 'FLAG-001', title: 'Undeclared Property', location: 'Lekki Phase 2', priority: 'High', status: 'Active' },
+  { id: 'FLAG-002', title: 'Tax Evasion Suspected', location: 'Victoria Island', priority: 'Critical', status: 'Under Review' },
+  { id: 'FLAG-003', title: 'Document Forgery', location: 'Ikoyi', priority: 'Medium', status: 'Resolved' },
 ]
 </script>
 
@@ -103,7 +103,7 @@ const recentCases = [
           </div>
 
           <div class="card p-5">
-            <h3 class="section-title">Cases by Type</h3>
+            <h3 class="section-title">Flags by Type</h3>
             <div class="h-40 flex items-center justify-center">
               <Bar :data="barData" :options="{ responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#f3f4f6' } }, y: { grid: { display: false } } } }" />
             </div>
@@ -112,7 +112,7 @@ const recentCases = [
 
         <div class="grid grid-cols-3 gap-4 mb-6">
           <div class="card p-5 col-span-2">
-            <h3 class="section-title">Case Status</h3>
+            <h3 class="section-title">Flag Status</h3>
             <div class="h-40 flex items-center justify-center">
               <Doughnut :data="doughnutData" :options="{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, padding: 12 } } } }" />
             </div>
@@ -120,10 +120,10 @@ const recentCases = [
 
           <div class="card">
             <div class="px-5 py-4 border-b border-[#e5e7eb]">
-              <h3 class="section-title mb-0">Recent Cases</h3>
+              <h3 class="section-title mb-0">Recent Flags</h3>
             </div>
             <div class="p-4">
-              <div v-for="c in recentCases" :key="c.id" class="py-3 border-b border-[#f3f4f6] last:border-0">
+              <div v-for="c in recentFlags" :key="c.id" class="py-3 border-b border-[#f3f4f6] last:border-0">
                 <p class="text-sm font-medium text-[#1f2937]">{{ c.title }}</p>
                 <p class="text-xs text-[#6b7280] mt-0.5">{{ c.location }}</p>
                 <div class="flex items-center gap-2 mt-2">

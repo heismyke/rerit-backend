@@ -26,13 +26,12 @@ const users = ref([
   { id: 'U-001', name: 'Aisha Mohammed', email: 'aisha.mohammed@nrs.gov.ng', role: 'Admin', department: 'IT', status: 'Active', lastLogin: '2024-01-15 09:30', created: '2023-06-01' },
   { id: 'U-002', name: 'Chukwudi Okafor', email: 'c.okafor@nrs.gov.ng', role: 'Auditor', department: 'Audit', status: 'Active', lastLogin: '2024-01-15 08:15', created: '2023-06-15' },
   { id: 'U-003', name: 'Funke Adebayo', email: 'f.adebayo@nrs.gov.ng', role: 'Compliance', department: 'Compliance', status: 'Active', lastLogin: '2024-01-14 16:45', created: '2023-07-01' },
-  { id: 'U-004', name: 'Ibrahim Bello', email: 'i.bello@nrs.gov.ng', role: 'Surveyor', department: 'Survey', status: 'Inactive', lastLogin: '2024-01-10 11:00', created: '2023-07-15' },
-  { id: 'U-005', name: 'Ngozi Eze', email: 'n.eze@nrs.gov.ng', role: 'Developer', department: 'Tax Payer', status: 'Active', lastLogin: '2024-01-15 10:00', created: '2023-08-01' },
+  { id: 'U-004', name: 'Ngozi Eze', email: 'n.eze@nrs.gov.ng', role: 'Tax Payer', department: 'Tax Payer', status: 'Active', lastLogin: '2024-01-15 10:00', created: '2023-08-01' },
   { id: 'U-006', name: 'Segun Fashola', email: 's.fashola@nrs.gov.ng', role: 'Admin', department: 'Operations', status: 'Active', lastLogin: '2024-01-14 14:30', created: '2023-08-15' },
   { id: 'U-007', name: 'Amina Yusuf', email: 'a.yusuf@nrs.gov.ng', role: 'Auditor', department: 'Audit', status: 'Pending', lastLogin: '-', created: '2024-01-10' },
 ])
 
-const roles = ['Admin', 'Auditor', 'Compliance', 'Surveyor', 'Developer']
+const roles = ['Admin', 'Auditor', 'Compliance', 'Tax Payer']
 
 const filteredUsers = computed(() => {
   let items = users.value.filter(u => u.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || u.email.toLowerCase().includes(searchQuery.value.toLowerCase()) || u.id.toLowerCase().includes(searchQuery.value.toLowerCase()))

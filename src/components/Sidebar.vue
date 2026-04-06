@@ -27,7 +27,6 @@ const adminMenu = [
   { label: 'Revenue & Payments', path: '/admin/revenue' },
   { label: 'Cases', path: '/admin/cases' },
   { label: 'Audits', path: '/admin/audits' },
-  { label: 'Surveys', path: '/admin/surveys' },
   { label: 'Compliance', path: '/admin/compliance' },
   { label: 'Reports', path: '/admin/reports' },
   { label: 'Users & Roles', path: '/admin/users' },
@@ -35,19 +34,12 @@ const adminMenu = [
   { label: 'Settings', path: '/admin/settings' },
 ]
 
-const developerMenu = [
-  { label: 'Overview', path: '/developer' },
-  { label: 'Properties', path: '/developer/properties' },
-  { label: 'Notices', path: '/developer/notices' },
-  { label: 'Payments', path: '/developer/payments' },
-  { label: 'Settings', path: '/developer/settings' },
-]
-
-const surveyorMenu = [
-  { label: 'Overview', path: '/surveyor' },
-  { label: 'Surveys', path: '/surveyor/surveys' },
-  { label: 'Submissions', path: '/surveyor/submissions' },
-  { label: 'Settings', path: '/surveyor/settings' },
+const taxpayerMenu = [
+  { label: 'Overview', path: '/taxpayer' },
+  { label: 'Properties', path: '/taxpayer/properties' },
+  { label: 'Notices', path: '/taxpayer/notices' },
+  { label: 'Payments', path: '/taxpayer/payments' },
+  { label: 'Settings', path: '/taxpayer/settings' },
 ]
 
 const complianceMenu = [
@@ -65,10 +57,8 @@ const getMenu = (roleId: RoleSlug) => {
       return auditorMenu
     case 'admin':
       return adminMenu
-    case 'developer':
-      return developerMenu
-    case 'surveyor':
-      return surveyorMenu
+    case 'taxpayer':
+      return taxpayerMenu
     case 'compliance':
       return complianceMenu
     default:
