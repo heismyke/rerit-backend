@@ -204,7 +204,7 @@ const handleDeleteCase = () => {
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Priority</label><select v-model="editCase.priority" class="input-field w-full"><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
-              <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Status</label><select v-model="editCase.status" class="input-field w-full"><option>Completed</option><option>Flagged</option></select></div>
+              <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Status</label><select v-model="editCase.status" class="input-field w-full"><option>In Progress</option><option>Completed</option><option>Flagged</option></select></div>
             </div>
           </div>
           <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-between"><button @click="handleDeleteCase" class="px-4 py-2 text-[11px] text-red-600 border border-red-200 rounded-lg hover:bg-red-50">Delete</button><div class="flex gap-3"><button @click="showEditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleUpdateCase" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Save</button></div></div>
