@@ -3,7 +3,7 @@ import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import { ref, computed } from 'vue'
-import { useAuditorCasesStore } from '@/stores/auditorCasesStore'
+import { useAuditorCasesStore, type AuditCase } from '@/stores/auditorCasesStore'
 
 const { selectedRole, user, logout } = useRoleStore()
 const router = useRouter()
@@ -21,8 +21,15 @@ const showResultModal = ref(false)
 const selectedCase = ref<any>(null)
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
-const newCase = ref({ property: '', owner: '', priority: 'Medium', status: 'Pending', due: '' })
-const editCase = ref({ property: '', owner: '', priority: 'Medium', status: 'Pending', due: '' })
+type CaseDraft = {
+  property: string
+  owner: string
+  priority: AuditCase['priority']
+  status: AuditCase['status']
+  due: string
+}
+const newCase = ref<CaseDraft>({ property: '', owner: '', priority: 'Medium', status: 'Pending', due: '' })
+const editCase = ref<CaseDraft>({ property: '', owner: '', priority: 'Medium', status: 'Pending', due: '' })
 
 const { auditCases, moveAuditToSuccessful, moveAuditToFlagged } = useAuditorCasesStore()
 
@@ -48,7 +55,7 @@ const openResultModal = (c: any) => {
   showResultModal.value = true
 }
 
-const resultForm = ref({
+const resultForm = ref<{ status: NonNullable<AuditCase['resultStatus']>; message: string }>({
   status: 'Compliant',
   message: '',
 })

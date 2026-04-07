@@ -3,7 +3,7 @@ import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import { ref, computed } from 'vue'
-import { useAuditorCasesStore } from '@/stores/auditorCasesStore'
+import { useAuditorCasesStore, type SuccessfulFiling } from '@/stores/auditorCasesStore'
 
 const { selectedRole, user, logout } = useRoleStore()
 const router = useRouter()
@@ -14,7 +14,7 @@ const currentPage = ref(1)
 const itemsPerPage = ref(5)
 const showEditModal = ref(false)
 const selectedFiling = ref<any>(null)
-const editFiling = ref({ status: 'Validated' })
+const editFiling = ref<{ status: SuccessfulFiling['status'] }>({ status: 'Validated' })
 
 const { successfulFilings } = useAuditorCasesStore()
 

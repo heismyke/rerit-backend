@@ -3,7 +3,7 @@ import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import { ref, computed } from 'vue'
-import { useAuditorCasesStore } from '@/stores/auditorCasesStore'
+import { useAuditorCasesStore, type FlaggedCase } from '@/stores/auditorCasesStore'
 
 const { selectedRole, user, logout } = useRoleStore()
 const router = useRouter()
@@ -59,8 +59,8 @@ const openResultModal = (f: any) => {
   showResultModal.value = true
 }
 
-const editFlag = ref({ priority: 'Medium', status: 'Pending Review' })
-const resultForm = ref({ status: 'Compliant', message: '' })
+const editFlag = ref<{ priority: FlaggedCase['priority']; status: FlaggedCase['status'] }>({ priority: 'Medium', status: 'Pending Review' })
+const resultForm = ref<{ status: NonNullable<FlaggedCase['resultStatus']>; message: string }>({ status: 'Compliant', message: '' })
 
 const handleUpdateFlag = () => {
   const index = flaggedCases.value.findIndex(f => f.id === selectedFlag.value.id)
