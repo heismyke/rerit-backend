@@ -19,12 +19,12 @@ export const roles: Role[] = [
     description: 'Manage your property portfolio and tax obligations',
     icon: '◫',
   },
-  {
-    id: 'compliance',
-    name: 'Compliance Officer (NRS Officer)',
-    description: 'Ensure regulatory compliance and enforcement',
-    icon: '◉',
-  },
+  // {
+  //   id: 'compliance',
+  //   name: 'Compliance Officer (NRS Officer)',
+  //   description: 'Ensure regulatory compliance and enforcement',
+  //   icon: '◉',
+  // },
 ]
 
 export const getRoleById = (id: RoleSlug): Role | undefined => {
@@ -32,11 +32,11 @@ export const getRoleById = (id: RoleSlug): Role | undefined => {
 }
 
 export const getRouteByRoleId = (id: RoleSlug): string => {
-  const routes: Record<RoleSlug, string> = {
+  const routes: Partial<Record<RoleSlug, string>> = {
     admin: '/admin',
     auditor: '/auditor',
     taxpayer: '/taxpayer',
-    compliance: '/compliance',
+    // compliance: '/compliance',
   }
-  return routes[id]
+  return routes[id] ?? '/'
 }

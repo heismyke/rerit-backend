@@ -27,7 +27,7 @@ const adminMenu = [
   { label: 'Revenue & Payments', path: '/admin/revenue' },
   { label: 'Cases', path: '/admin/cases' },
   { label: 'Audits', path: '/admin/audits' },
-  { label: 'Compliance', path: '/admin/compliance' },
+  // { label: 'Compliance', path: '/admin/compliance' },
   { label: 'Reports', path: '/admin/reports' },
   { label: 'Users & Roles', path: '/admin/users' },
   { label: 'Notifications', path: '/admin/notifications' },
@@ -42,14 +42,14 @@ const taxpayerMenu = [
   { label: 'Settings', path: '/taxpayer/settings' },
 ]
 
-const complianceMenu = [
-  { label: 'Overview', path: '/compliance' },
-  { label: 'Properties', path: '/compliance/properties' },
-  { label: 'Flagged', path: '/compliance/flagged' },
-  { label: 'Registry', path: '/compliance/land-registry' },
-  { label: 'Notes', path: '/compliance/notes' },
-  { label: 'Settings', path: '/compliance/settings' },
-]
+// const complianceMenu = [
+//   { label: 'Overview', path: '/compliance' },
+//   { label: 'Properties', path: '/compliance/properties' },
+//   { label: 'Flagged', path: '/compliance/flagged' },
+//   { label: 'Registry', path: '/compliance/land-registry' },
+//   { label: 'Notes', path: '/compliance/notes' },
+//   { label: 'Settings', path: '/compliance/settings' },
+// ]
 
 const getMenu = (roleId: RoleSlug) => {
   switch (roleId) {
@@ -59,8 +59,6 @@ const getMenu = (roleId: RoleSlug) => {
       return adminMenu
     case 'taxpayer':
       return taxpayerMenu
-    case 'compliance':
-      return complianceMenu
     default:
       return []
   }
