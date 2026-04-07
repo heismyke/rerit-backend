@@ -14,11 +14,14 @@ import {
 import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
+import { computed, ref } from 'vue'
+import { useAuditorCasesStore } from '@/stores/auditorCasesStore'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement)
 
 const { selectedRole, user, logout } = useRoleStore()
 const router = useRouter()
+const { auditCases, flaggedCases, successfulFilings } = useAuditorCasesStore()
 
 const handleLogout = () => {
   logout()
@@ -56,6 +59,52 @@ const recentAudits = [
   { id: 'AUD-004', property: 'Plot 8, Banana Island', owner: 'Folake Adeyemi', status: 'Under Investigation', date: 'Jan 12', priority: 'High' },
   { id: 'AUD-005', property: 'Block 12, Maitama', owner: 'Global Ventures Ltd', status: 'Pending Review', date: 'Jan 11', priority: 'Critical' },
 ]
+
+const searchAll = ref('')
+const filterAll = ref('all')
+
+const allCases = computed(() => {
+  const audit = auditCases.value.map(c => ({
+    id: c.id,
+    source: 'Audit Case',
+    property: c.property,
+    taxpayer: c.owner,
+    status: c.status,
+    result: c.resultStatus || 'Pending',
+    date: c.started,
+  }))
+  const flagged = flaggedCases.value.map(f => ({
+    id: f.id,
+    source: 'Flagged',
+    property: f.property,
+    taxpayer: f.taxpayer,
+    status: f.status,
+    result: f.resultStatus || 'Pending',
+    date: f.receivedAt,
+  }))
+  const successful = successfulFilings.value.map(s => ({
+    id: s.id,
+    source: 'Successful',
+    property: s.property,
+    taxpayer: s.taxpayer,
+    status: s.status,
+    result: 'Compliant',
+    date: s.validatedAt,
+  }))
+  return [...audit, ...flagged, ...successful]
+})
+
+const filteredAllCases = computed(() => {
+  const q = searchAll.value.toLowerCase()
+  return allCases.value.filter(c => {
+    const matchesSearch = c.id.toLowerCase().includes(q)
+      || c.property.toLowerCase().includes(q)
+      || c.taxpayer.toLowerCase().includes(q)
+      || c.source.toLowerCase().includes(q)
+    const matchesFilter = filterAll.value === 'all' || c.source === filterAll.value
+    return matchesSearch && matchesFilter
+  })
+})
 </script>
 
 <template>
@@ -139,6 +188,62 @@ const recentAudits = [
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="card mt-6">
+          <div class="px-5 py-4 border-b border-[#e5e7eb] flex items-center justify-between">
+            <h3 class="section-title mb-0">All Cases Overview</h3>
+            <div class="flex gap-3 items-center">
+              <input v-model="searchAll" type="text" placeholder="Search all cases..." class="input-field w-64" />
+              <select v-model="filterAll" class="input-field w-40">
+                <option value="all">All</option>
+                <option>Audit Case</option>
+                <option>Flagged</option>
+                <option>Successful</option>
+              </select>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="table-header">ID</th>
+                  <th class="table-header">Source</th>
+                  <th class="table-header">Property</th>
+                  <th class="table-header">Taxpayer</th>
+                  <th class="table-header">Status</th>
+                  <th class="table-header">Result</th>
+                  <th class="table-header">Date</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#f3f4f6]">
+                <tr v-for="c in filteredAllCases" :key="c.id">
+                  <td class="table-cell font-medium">{{ c.id }}</td>
+                  <td class="table-cell text-[#6b7280]">{{ c.source }}</td>
+                  <td class="table-cell">{{ c.property }}</td>
+                  <td class="table-cell">{{ c.taxpayer }}</td>
+                  <td class="table-cell">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium"
+                      :class="{
+                        'bg-yellow-50 text-yellow-700': c.status === 'Pending' || c.status === 'Pending Review',
+                        'bg-blue-50 text-blue-700': c.status === 'In Progress' || c.status === 'In Review',
+                        'bg-green-50 text-green-700': c.status === 'Completed' || c.status === 'Resolved' || c.status === 'Validated' || c.status === 'Reviewed',
+                        'bg-red-50 text-red-700': c.status === 'Flagged',
+                      }">{{ c.status }}</span>
+                  </td>
+                  <td class="table-cell">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium"
+                      :class="{
+                        'bg-gray-100 text-gray-600': c.result === 'Pending',
+                        'bg-green-50 text-green-700': c.result === 'Compliant',
+                        'bg-red-50 text-red-700': c.result === 'Non-Compliant',
+                      }">{{ c.result }}</span>
+                  </td>
+                  <td class="table-cell text-[#9ca3af]">{{ c.date }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </main>
     </div>

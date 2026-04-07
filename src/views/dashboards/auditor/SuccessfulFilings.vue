@@ -3,6 +3,7 @@ import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import { ref, computed } from 'vue'
+import { useAuditorCasesStore } from '@/stores/auditorCasesStore'
 
 const { selectedRole, user, logout } = useRoleStore()
 const router = useRouter()
@@ -15,12 +16,7 @@ const showEditModal = ref(false)
 const selectedFiling = ref<any>(null)
 const editFiling = ref({ status: 'Validated' })
 
-const successfulFilings = ref([
-  { id: 'SUC-2024-101', filingId: 'FCT-IRS-00311', property: 'Plot 12, Jabi', taxpayer: 'Kola Ibrahim', validatedAt: '2024-01-18', status: 'Validated' },
-  { id: 'SUC-2024-102', filingId: 'FCT-IRS-00318', property: 'Block 5, Garki', taxpayer: 'Laila Musa', validatedAt: '2024-01-18', status: 'Validated' },
-  { id: 'SUC-2024-103', filingId: 'FCT-IRS-00327', property: 'Unit 3, Wuse I', taxpayer: 'Prime Estates Ltd', validatedAt: '2024-01-19', status: 'Validated' },
-  { id: 'SUC-2024-104', filingId: 'FCT-IRS-00333', property: 'Plot 6, Maitama', taxpayer: 'Uche Nwankwo', validatedAt: '2024-01-20', status: 'Validated' },
-])
+const { successfulFilings } = useAuditorCasesStore()
 
 const filteredFilings = computed(() => successfulFilings.value.filter(f => {
   const q = searchQuery.value.toLowerCase()

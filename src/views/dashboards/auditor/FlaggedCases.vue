@@ -3,6 +3,7 @@ import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
 import { ref, computed } from 'vue'
+import { useAuditorCasesStore } from '@/stores/auditorCasesStore'
 
 const { selectedRole, user, logout } = useRoleStore()
 const router = useRouter()
@@ -21,12 +22,7 @@ const selectedFlag = ref<any>(null)
 const aiInsights = ref('')
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
-const flaggedCases = ref([
-  { id: 'FLG-2024-011', filingId: 'FCT-IRS-00211', property: 'Plot 18, Wuse II', taxpayer: 'Nwosu Holdings', reason: 'Declared rent below benchmark', receivedAt: '2024-01-18', status: 'Pending Review', priority: 'High', resultStatus: null, resultNotes: '', resultSentAt: null },
-  { id: 'FLG-2024-012', filingId: 'FCT-IRS-00225', property: 'Block 4, Maitama', taxpayer: 'Ayo Martins', reason: 'Declared rent below benchmark', receivedAt: '2024-01-18', status: 'Pending Review', priority: 'Medium', resultStatus: null, resultNotes: '', resultSentAt: null },
-  { id: 'FLG-2024-013', filingId: 'FCT-IRS-00231', property: 'Unit 12, Gwarinpa', taxpayer: 'Saka Ventures', reason: 'Declared rent below benchmark', receivedAt: '2024-01-19', status: 'In Review', priority: 'High', resultStatus: null, resultNotes: '', resultSentAt: null },
-  { id: 'FLG-2024-014', filingId: 'FCT-IRS-00237', property: 'Plot 9, Asokoro', taxpayer: 'Dara Okafor', reason: 'Declared rent below benchmark', receivedAt: '2024-01-20', status: 'In Review', priority: 'Critical', resultStatus: 'Non-Compliant', resultNotes: 'Under-declaration confirmed. Notice issued.', resultSentAt: '2024-01-21' },
-])
+const { flaggedCases } = useAuditorCasesStore()
 
 const filteredFlags = computed(() => flaggedCases.value.filter(f => {
   const matchesSearch = f.id.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -180,7 +176,6 @@ const generateAiInsights = () => {
                       <button @click="openViewModal(flag)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button>
                       <button @click="openEditModal(flag)" class="px-3 py-1 text-[11px] bg-green-50 text-green-700 rounded hover:bg-green-100">Edit</button>
                       <button @click="openResultModal(flag)" class="px-3 py-1 text-[11px] bg-[#2D5A27]/10 text-[#2D5A27] rounded hover:bg-[#2D5A27]/20">Send Result</button>
-                      <button @click="openAiModal(flag)" class="px-3 py-1 text-[11px] bg-[#111827]/10 text-[#111827] rounded hover:bg-[#111827]/20">AI Review</button>
                     </div>
                   </td>
                 </tr>
@@ -239,7 +234,10 @@ const generateAiInsights = () => {
             </div>
           </div>
           <div class="px-6 py-4 border-t border-gray-100 flex justify-between">
-            <button @click="openResultModal(selectedFlag)" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Send Result</button>
+            <div class="flex gap-2">
+              <button @click="openResultModal(selectedFlag)" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Send Result</button>
+              <button @click="openAiModal(selectedFlag)" class="px-4 py-2 text-[11px] bg-[#111827] text-white rounded-lg hover:bg-[#0b1220]">AI Review</button>
+            </div>
             <button @click="showViewModal = false" class="px-4 py-2 text-[11px] bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Close</button>
           </div>
         </div>

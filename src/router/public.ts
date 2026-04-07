@@ -26,6 +26,12 @@ const publicRoutes = [
     meta: { access: 'auditor', requiresAuth: true },
   },
   {
+    path: '/auditor/cases',
+    name: 'auditor-cases',
+    component: () => import('@/views/dashboards/auditor/Cases.vue'),
+    meta: { access: 'auditor', requiresAuth: true },
+  },
+  {
     path: '/auditor/flagged-cases',
     name: 'auditor-flagged-cases',
     component: () => import('@/views/dashboards/auditor/FlaggedCases.vue'),
