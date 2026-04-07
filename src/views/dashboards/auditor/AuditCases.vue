@@ -96,7 +96,7 @@ const handleSendResult = () => {
   const index = auditCases.value.findIndex(c => c.id === selectedCase.value.id)
   if (index === -1) return
   const resultStatus = resultForm.value.status
-  const nextStatus = resultStatus === 'Compliant' ? 'Completed' : 'Flagged'
+  const nextStatus: AuditCase['status'] = resultStatus === 'Compliant' ? 'Completed' : 'Flagged'
   const updated = {
     ...auditCases.value[index],
     status: nextStatus,
