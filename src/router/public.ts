@@ -26,6 +26,18 @@ const publicRoutes = [
     meta: { access: 'auditor', requiresAuth: true },
   },
   {
+    path: '/auditor/flagged-cases',
+    name: 'auditor-flagged-cases',
+    component: () => import('@/views/dashboards/auditor/FlaggedCases.vue'),
+    meta: { access: 'auditor', requiresAuth: true },
+  },
+  {
+    path: '/auditor/successful-filings',
+    name: 'auditor-successful-filings',
+    component: () => import('@/views/dashboards/auditor/SuccessfulFilings.vue'),
+    meta: { access: 'auditor', requiresAuth: true },
+  },
+  {
     path: '/auditor/land-registry',
     name: 'auditor-land-registry',
     component: () => import('@/views/dashboards/auditor/LandRegistry.vue'),

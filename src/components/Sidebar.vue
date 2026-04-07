@@ -15,6 +15,8 @@ const auditorMenu = [
   { label: 'Overview', path: '/auditor' },
   { label: 'Properties', path: '/auditor/properties' },
   { label: 'Audit Cases', path: '/auditor/audit-cases' },
+  { label: 'Flagged Cases', path: '/auditor/flagged-cases' },
+  { label: 'Successful Filings', path: '/auditor/successful-filings' },
   { label: 'Land Registry', path: '/auditor/land-registry' },
   { label: 'Settings', path: '/auditor/settings' },
 ]
