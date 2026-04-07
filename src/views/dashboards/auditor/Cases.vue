@@ -17,7 +17,6 @@ const itemsPerPage = ref(5)
 const showAddModal = ref(false)
 const showViewModal = ref(false)
 const showEditModal = ref(false)
-const showResultModal = ref(false)
 const selectedCase = ref<any>(null)
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
@@ -46,19 +45,6 @@ const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) 
 const showToast = (message: string) => { toast.value = { show: true, message }; setTimeout(() => { toast.value.show = false }, 3000) }
 const openViewModal = (c: any) => { selectedCase.value = c; showViewModal.value = true }
 const openEditModal = (c: any) => { selectedCase.value = c; editCase.value = { ...c }; showEditModal.value = true }
-const openResultModal = (c: any) => {
-  selectedCase.value = c
-  resultForm.value = {
-    status: c.resultStatus || 'Compliant',
-    message: c.resultNotes || '',
-  }
-  showResultModal.value = true
-}
-
-const resultForm = ref<{ status: NonNullable<AuditCase['resultStatus']>; message: string }>({
-  status: 'Compliant',
-  message: '',
-})
 
 const handleAddCase = () => {
   const newId = 'AUD-2024-' + String(auditCases.value.length + 1).padStart(3, '0')
@@ -90,31 +76,6 @@ const handleUpdateCase = () => {
     showToast('Case updated')
   }
   showEditModal.value = false
-}
-
-const handleSendResult = () => {
-  const index = auditCases.value.findIndex(c => c.id === selectedCase.value.id)
-  if (index === -1) return
-  const resultStatus = resultForm.value.status
-  const nextStatus: AuditCase['status'] = resultStatus === 'Compliant' ? 'Completed' : 'Flagged'
-  const updated = {
-    ...auditCases.value[index],
-    status: nextStatus,
-    resultStatus,
-    resultNotes: resultForm.value.message,
-    resultSentAt: new Date().toISOString().split('T')[0],
-  }
-  auditCases.value[index] = updated
-  if (updated.status === 'Completed') {
-    moveAuditToSuccessful(updated)
-    auditCases.value = auditCases.value.filter(c => c.id !== updated.id)
-  }
-  if (updated.status === 'Flagged') {
-    moveAuditToFlagged(updated)
-    auditCases.value = auditCases.value.filter(c => c.id !== updated.id)
-  }
-  showResultModal.value = false
-  showToast('Result sent to taxpayer')
 }
 
 const handleDeleteCase = () => {
@@ -159,7 +120,6 @@ const handleDeleteCase = () => {
                     <div class="flex gap-2">
                       <button @click="openViewModal(audit)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button>
                       <button @click="openEditModal(audit)" class="px-3 py-1 text-[11px] bg-green-50 text-green-700 rounded hover:bg-green-100">Edit</button>
-                      <button @click="openResultModal(audit)" class="px-3 py-1 text-[11px] bg-[#2D5A27]/10 text-[#2D5A27] rounded hover:bg-[#2D5A27]/20">Send Result</button>
                     </div>
                   </td>
                 </tr>
@@ -204,7 +164,7 @@ const handleDeleteCase = () => {
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Priority</label><select v-model="editCase.priority" class="input-field w-full"><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
-              <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Status</label><select v-model="editCase.status" class="input-field w-full"><option>Pending</option><option>In Progress</option><option>Completed</option><option>Flagged</option></select></div>
+              <div><label class="block text-[11px] font-medium text-gray-600 mb-1.5">Status</label><select v-model="editCase.status" class="input-field w-full"><option>Pending</option><option>Completed</option><option>Flagged</option></select></div>
             </div>
           </div>
           <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-between"><button @click="handleDeleteCase" class="px-4 py-2 text-[11px] text-red-600 border border-red-200 rounded-lg hover:bg-red-50">Delete</button><div class="flex gap-3"><button @click="showEditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button><button @click="handleUpdateCase" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Save</button></div></div>
@@ -249,41 +209,8 @@ const handleDeleteCase = () => {
               <div><p class="text-[11px] text-gray-500">Due Date</p><p class="text-[13px]">{{ selectedCase?.due }}</p></div>
             </div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex justify-between">
-            <button @click="openResultModal(selectedCase)" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Send Result</button>
+          <div class="px-6 py-4 border-t border-gray-100 flex justify-end">
             <button @click="showViewModal = false" class="px-4 py-2 text-[11px] bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Close</button>
-          </div>
-        </div>
-      </div>
-    </Teleport>
-
-    <Teleport to="body">
-      <div v-if="showResultModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center"><h3 class="text-base font-semibold text-white">Send Filing Result</h3><button @click="showResultModal = false" class="text-white/80 hover:text-white">✕</button></div>
-          <div class="p-6 space-y-4">
-            <div>
-              <p class="text-[11px] text-gray-500">Case</p>
-              <p class="text-[13px] font-medium">{{ selectedCase?.id }} — {{ selectedCase?.property }}</p>
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-gray-600 mb-1.5">Result</label>
-              <select v-model="resultForm.status" class="input-field w-full">
-                <option>Compliant</option>
-                <option>Non-Compliant</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-gray-600 mb-1.5">Notes to Taxpayer</label>
-              <textarea v-model="resultForm.message" rows="4" placeholder="Explain the outcome, required actions, or next steps." class="w-full px-4 py-3 border border-[#e5e7eb] rounded-lg text-[13px] resize-none focus:ring-2 focus:ring-[#2D5A27] focus:border-transparent"></textarea>
-            </div>
-            <div class="rounded-lg bg-[#f9fafb] border border-[#e5e7eb] p-3 text-[11px] text-[#6b7280]">
-              This will appear in the taxpayer portal as the official filing result.
-            </div>
-          </div>
-          <div class="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end">
-            <button @click="showResultModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
-            <button @click="handleSendResult" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Send</button>
           </div>
         </div>
       </div>
