@@ -11,6 +11,9 @@ const handleLogout = () => { logout(); router.push('/') }
 const searchQuery = ref('')
 const currentPage = ref(1)
 const itemsPerPage = ref(5)
+const showEditModal = ref(false)
+const selectedFiling = ref<any>(null)
+const editFiling = ref({ status: 'Validated' })
 
 const successfulFilings = ref([
   { id: 'SUC-2024-101', filingId: 'FCT-IRS-00311', property: 'Plot 12, Jabi', taxpayer: 'Kola Ibrahim', validatedAt: '2024-01-18', status: 'Validated' },
@@ -33,6 +36,18 @@ const paginatedFilings = computed(() => {
   return filteredFilings.value.slice(start, start + itemsPerPage.value)
 })
 const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) currentPage.value = page }
+
+const openEditModal = (f: any) => {
+  selectedFiling.value = f
+  editFiling.value = { status: f.status }
+  showEditModal.value = true
+}
+
+const handleUpdateFiling = () => {
+  const index = successfulFilings.value.findIndex(f => f.id === selectedFiling.value.id)
+  if (index !== -1) successfulFilings.value[index] = { ...successfulFilings.value[index], ...editFiling.value }
+  showEditModal.value = false
+}
 </script>
 
 <template>
@@ -70,6 +85,7 @@ const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) 
                   <th class="table-header">Taxpayer</th>
                   <th class="table-header">Validated</th>
                   <th class="table-header">Status</th>
+                  <th class="table-header">Actions</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-[#f3f4f6]">
@@ -81,6 +97,9 @@ const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) 
                   <td class="table-cell text-[#9ca3af]">{{ filing.validatedAt }}</td>
                   <td class="table-cell">
                     <span class="px-2 py-0.5 text-[11px] font-medium rounded-full bg-green-50 text-green-700">{{ filing.status }}</span>
+                  </td>
+                  <td class="table-cell">
+                    <button @click="openEditModal(filing)" class="px-3 py-1 text-[11px] bg-green-50 text-green-700 rounded hover:bg-green-100">Edit</button>
                   </td>
                 </tr>
               </tbody>
@@ -97,5 +116,35 @@ const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) 
         </div>
       </main>
     </div>
+
+    <Teleport to="body">
+      <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
+            <h3 class="text-base font-semibold text-white">Edit Filing</h3>
+            <button @click="showEditModal = false" class="text-white/80 hover:text-white">✕</button>
+          </div>
+          <div class="p-6 space-y-4">
+            <div class="bg-[#f9fafb] rounded-lg p-4 border border-[#e5e7eb]">
+              <p class="text-[11px] text-gray-500">Filing</p>
+              <p class="text-[13px] font-medium">{{ selectedFiling?.id }} — {{ selectedFiling?.property }}</p>
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-gray-600 mb-1.5">Status</label>
+              <select v-model="editFiling.status" class="input-field w-full">
+                <option>Validated</option>
+                <option>Reviewed</option>
+              </select>
+            </div>
+          </div>
+          <div class="px-6 py-4 border-t border-gray-100 flex justify-end">
+            <div class="flex gap-3">
+              <button @click="showEditModal = false" class="px-4 py-2 text-[11px] border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
+              <button @click="handleUpdateFiling" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
