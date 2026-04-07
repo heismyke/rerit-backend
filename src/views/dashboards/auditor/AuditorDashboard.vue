@@ -226,7 +226,7 @@ const filteredAllCases = computed(() => {
                     <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium"
                       :class="{
                         'bg-yellow-50 text-yellow-700': c.status === 'Pending' || c.status === 'Pending Review',
-                        'bg-blue-50 text-blue-700': c.status === 'In Progress' || c.status === 'In Review',
+                        'bg-blue-50 text-blue-700': c.status === 'In Progress',
                         'bg-green-50 text-green-700': c.status === 'Completed' || c.status === 'Resolved' || c.status === 'Validated' || c.status === 'Reviewed',
                         'bg-red-50 text-red-700': c.status === 'Flagged',
                       }">{{ c.status }}</span>

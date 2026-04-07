@@ -159,7 +159,7 @@ const generateAiInsights = () => {
                     <span class="px-2 py-0.5 text-[11px] font-medium rounded-full"
                       :class="{
                         'bg-yellow-50 text-yellow-700': flag.status === 'Pending Review',
-                        'bg-blue-50 text-blue-700': flag.status === 'In Review',
+                        'bg-blue-50 text-blue-700': flag.status === 'In Progress',
                         'bg-green-50 text-green-700': flag.status === 'Resolved',
                       }">{{ flag.status }}</span>
                   </td>
@@ -206,7 +206,7 @@ const generateAiInsights = () => {
           <div class="p-6 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div><p class="text-[11px] text-gray-500">Flag ID</p><p class="text-[13px] font-medium">{{ selectedFlag?.id }}</p></div>
-              <div><p class="text-[11px] text-gray-500">Status</p><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-yellow-50 text-yellow-700': selectedFlag?.status === 'Pending Review', 'bg-blue-50 text-blue-700': selectedFlag?.status === 'In Review', 'bg-green-50 text-green-700': selectedFlag?.status === 'Resolved'}">{{ selectedFlag?.status }}</span></div>
+              <div><p class="text-[11px] text-gray-500">Status</p><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-yellow-50 text-yellow-700': selectedFlag?.status === 'Pending Review', 'bg-blue-50 text-blue-700': selectedFlag?.status === 'In Progress', 'bg-green-50 text-green-700': selectedFlag?.status === 'Resolved'}">{{ selectedFlag?.status }}</span></div>
               <div><p class="text-[11px] text-gray-500">Priority</p><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-red-50 text-red-700': selectedFlag?.priority === 'Critical', 'bg-orange-50 text-orange-700': selectedFlag?.priority === 'High', 'bg-yellow-50 text-yellow-700': selectedFlag?.priority === 'Medium', 'bg-gray-100 text-gray-600': selectedFlag?.priority === 'Low'}">{{ selectedFlag?.priority }}</span></div>
               <div><p class="text-[11px] text-gray-500">FCT‑IRS Filing ID</p><p class="text-[13px]">{{ selectedFlag?.filingId }}</p></div>
             </div>
@@ -259,7 +259,7 @@ const generateAiInsights = () => {
               </div>
               <div>
                 <label class="block text-[11px] font-medium text-gray-600 mb-1.5">Status</label>
-                <select v-model="editFlag.status" class="input-field w-full"><option>Pending Review</option><option>In Review</option><option>Resolved</option></select>
+                <select v-model="editFlag.status" class="input-field w-full"><option>Pending Review</option><option>In Progress</option><option>Resolved</option></select>
               </div>
             </div>
           </div>

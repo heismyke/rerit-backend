@@ -128,7 +128,6 @@ const handleUpdateFiling = () => {
             <div>
               <label class="block text-[11px] font-medium text-gray-600 mb-1.5">Status</label>
               <select v-model="editFiling.status" class="input-field w-full">
-                <option>Validated</option>
                 <option>Reviewed</option>
               </select>
             </div>

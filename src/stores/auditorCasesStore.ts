@@ -21,7 +21,7 @@ export type FlaggedCase = {
   taxpayer: string
   reason: string
   receivedAt: string
-  status: 'Pending Review' | 'In Review' | 'Resolved'
+  status: 'Pending Review' | 'In Progress' | 'Resolved'
   priority: 'Low' | 'Medium' | 'High' | 'Critical'
   resultStatus: 'Compliant' | 'Non-Compliant' | null
   resultNotes: string
@@ -45,9 +45,9 @@ const auditCases = ref<AuditCase[]>([
 const flaggedCases = ref<FlaggedCase[]>([
   { id: 'FLG-2024-011', filingId: 'FCT-IRS-00211', property: 'Plot 18, Wuse II', taxpayer: 'Nwosu Holdings', reason: 'Declared rent below benchmark', receivedAt: '2024-01-18', status: 'Pending Review', priority: 'High', resultStatus: null, resultNotes: '', resultSentAt: null },
   { id: 'FLG-2024-012', filingId: 'FCT-IRS-00225', property: 'Block 4, Maitama', taxpayer: 'Ayo Martins', reason: 'Declared rent below benchmark', receivedAt: '2024-01-18', status: 'Pending Review', priority: 'Medium', resultStatus: null, resultNotes: '', resultSentAt: null },
-  { id: 'FLG-2024-013', filingId: 'FCT-IRS-00231', property: 'Unit 12, Gwarinpa', taxpayer: 'Saka Ventures', reason: 'Declared rent below benchmark', receivedAt: '2024-01-19', status: 'In Review', priority: 'High', resultStatus: null, resultNotes: '', resultSentAt: null },
-  { id: 'FLG-2024-014', filingId: 'FCT-IRS-00237', property: 'Plot 9, Asokoro', taxpayer: 'Dara Okafor', reason: 'Declared rent below benchmark', receivedAt: '2024-01-20', status: 'In Review', priority: 'Critical', resultStatus: 'Non-Compliant', resultNotes: 'Under-declaration confirmed. Notice issued.', resultSentAt: '2024-01-21' },
-  { id: 'FLG-2024-004', filingId: 'FCT-IRS-00004', property: 'Plot 8, Banana Island', taxpayer: 'Folake Adeyemi', reason: 'Declared rent below benchmark', receivedAt: '2024-01-18', status: 'In Review', priority: 'Critical', resultStatus: 'Non-Compliant', resultNotes: 'Under-declared rental income. Notice of non-compliance issued.', resultSentAt: '2024-01-18' },
+  { id: 'FLG-2024-013', filingId: 'FCT-IRS-00231', property: 'Unit 12, Gwarinpa', taxpayer: 'Saka Ventures', reason: 'Declared rent below benchmark', receivedAt: '2024-01-19', status: 'In Progress', priority: 'High', resultStatus: null, resultNotes: '', resultSentAt: null },
+  { id: 'FLG-2024-014', filingId: 'FCT-IRS-00237', property: 'Plot 9, Asokoro', taxpayer: 'Dara Okafor', reason: 'Declared rent below benchmark', receivedAt: '2024-01-20', status: 'In Progress', priority: 'Critical', resultStatus: 'Non-Compliant', resultNotes: 'Under-declaration confirmed. Notice issued.', resultSentAt: '2024-01-21' },
+  { id: 'FLG-2024-004', filingId: 'FCT-IRS-00004', property: 'Plot 8, Banana Island', taxpayer: 'Folake Adeyemi', reason: 'Declared rent below benchmark', receivedAt: '2024-01-18', status: 'In Progress', priority: 'Critical', resultStatus: 'Non-Compliant', resultNotes: 'Under-declared rental income. Notice of non-compliance issued.', resultSentAt: '2024-01-18' },
 ])
 
 const successfulFilings = ref<SuccessfulFiling[]>([
