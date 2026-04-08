@@ -15,8 +15,10 @@ const currentPage = ref(1)
 const itemsPerPage = ref(5)
 
 const showViewModal = ref(false)
+const showEditModal = ref(false)
 const showAuditModal = ref(false)
 const selectedProperty = ref<any>(null)
+const editProperty = ref<any>(null)
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
 const newAudit = ref({ priority: 'Medium', dueDate: '', notes: '' })
@@ -56,9 +58,26 @@ const openViewModal = (p: any) => {
   showViewModal.value = true
 }
 
+const openEditModal = (p: any) => {
+  editProperty.value = { ...p }
+  showEditModal.value = true
+}
+
 const openAuditModal = () => {
   showViewModal.value = false
   showAuditModal.value = true
+}
+
+const savePropertyEdits = () => {
+  if (!editProperty.value) return
+  const index = properties.value.findIndex(p => p.id === editProperty.value.id)
+  if (index !== -1) {
+    properties.value[index] = {
+      ...editProperty.value,
+      riskScore: Number(editProperty.value.riskScore),
+    }
+  }
+  showEditModal.value = false
 }
 
 const startAudit = () => {
@@ -120,7 +139,12 @@ const getRiskColor = (level: string) => {
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="getRiskColor(property.riskLevel)">{{ property.riskLevel }} ({{ property.riskScore }})</span></td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-green-50 text-green-700': property.status === 'Verified', 'bg-yellow-50 text-yellow-700': property.status === 'Pending', 'bg-red-50 text-red-700': property.status === 'Flagged', 'bg-blue-50 text-blue-700': property.status === 'Under Audit'}">{{ property.status }}</span></td>
                   <td class="table-cell text-[#9ca3af]">{{ property.lastAudit }}</td>
-                  <td class="table-cell"><button @click="openViewModal(property)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">Review</button></td>
+                  <td class="table-cell">
+                    <div class="flex gap-2">
+                      <button @click="openViewModal(property)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button>
+                      <button @click="openEditModal(property)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#1e3d1a]">Edit</button>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -201,6 +225,81 @@ const getRiskColor = (level: string) => {
           </div>
           <div class="px-6 py-4 border-t border-[#e5e7eb] flex justify-end">
             <button @click="showViewModal = false" class="px-4 py-2 text-[11px] bg-[#f3f4f6] text-[#374151] rounded-lg hover:bg-[#e5e7eb]">Close</button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
+    <Teleport to="body">
+      <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl my-8">
+          <div class="bg-[#2D5A27] px-6 py-4 flex justify-between items-center">
+            <h3 class="text-base font-semibold text-white">Edit Property - {{ editProperty?.id }}</h3>
+            <button @click="showEditModal = false" class="text-white/80 hover:text-white">✕</button>
+          </div>
+          <div class="p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Owner</label>
+                <input v-model="editProperty.owner" type="text" class="input-field w-full" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Type</label>
+                <input v-model="editProperty.type" type="text" class="input-field w-full" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Address</label>
+              <input v-model="editProperty.address" type="text" class="input-field w-full" />
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Value</label>
+                <input v-model="editProperty.value" type="text" class="input-field w-full" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Status</label>
+                <select v-model="editProperty.status" class="input-field w-full">
+                  <option value="Verified">Verified</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Flagged">Flagged</option>
+                  <option value="Under Audit">Under Audit</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Risk Level</label>
+                <select v-model="editProperty.riskLevel" class="input-field w-full">
+                  <option value="Critical">Critical</option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Risk Score</label>
+                <input v-model="editProperty.riskScore" type="number" min="0" max="100" class="input-field w-full" />
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Last Audit</label>
+                <input v-model="editProperty.lastAudit" type="date" class="input-field w-full" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Declared Rent</label>
+                <input v-model="editProperty.declaredRent" type="text" class="input-field w-full" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Coordinates</label>
+              <input v-model="editProperty.coordinates" type="text" class="input-field w-full" />
+            </div>
+          </div>
+          <div class="px-6 py-4 border-t border-[#e5e7eb] flex justify-end gap-2">
+            <button @click="showEditModal = false" class="px-4 py-2 text-[11px] bg-[#f3f4f6] text-[#374151] rounded-lg hover:bg-[#e5e7eb]">Cancel</button>
+            <button @click="savePropertyEdits" class="px-4 py-2 text-[11px] bg-[#2D5A27] text-white rounded-lg hover:bg-[#1e3d1a]">Save Changes</button>
           </div>
         </div>
       </div>
