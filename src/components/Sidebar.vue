@@ -41,7 +41,6 @@ const taxpayerMenu = [
   { label: 'Overview', path: '/taxpayer' },
   { label: 'Properties', path: '/taxpayer/properties' },
   { label: 'Notices', path: '/taxpayer/notices' },
-  { label: 'Payments', path: '/taxpayer/payments' },
   { label: 'Settings', path: '/taxpayer/settings' },
 ]
 

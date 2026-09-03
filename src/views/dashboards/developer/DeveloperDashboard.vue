@@ -133,14 +133,10 @@ const notifications = [
             <div class="px-5 py-4 border-b border-[#e5e7eb]">
               <h3 class="section-title mb-0">Quick Actions</h3>
             </div>
-            <div class="p-4 grid grid-cols-3 gap-3">
+            <div class="p-4 grid grid-cols-2 gap-3">
               <button @click="router.push('/taxpayer/notices')" class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#2D5A27] hover:bg-red-50/30 transition">
                 <p class="text-xs font-medium text-[#1f2937]">Respond to Notice</p>
                 <p class="text-[11px] text-[#9ca3af] mt-1">View & respond</p>
-              </button>
-              <button @click="router.push('/taxpayer/payments')" class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#2D5A27] hover:bg-red-50/30 transition">
-                <p class="text-xs font-medium text-[#1f2937]">Make Payment</p>
-                <p class="text-[11px] text-[#9ca3af] mt-1">Pay tax dues</p>
               </button>
               <button class="p-4 border border-[#e5e7eb] rounded text-center hover:border-[#2D5A27] hover:bg-red-50/30 transition">
                 <p class="text-xs font-medium text-[#1f2937]">Request Refund</p>

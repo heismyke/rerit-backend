@@ -2,7 +2,19 @@
 import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { api } from '@/services/api'
+
+type Notice = {
+  id: string
+  title: string
+  property: string
+  amount: string
+  dueDate: string
+  status: string
+  type: string
+  response?: string
+}
 
 const { selectedRole, user, logout } = useRoleStore()
 const router = useRouter()
@@ -15,16 +27,20 @@ const itemsPerPage = ref(5)
 
 const showViewModal = ref(false)
 const showRespondModal = ref(false)
-const selectedNotice = ref<any>(null)
+const selectedNotice = ref<Notice | null>(null)
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
+const isLoading = ref(false)
+const errorMessage = ref('')
 const response = ref('')
 
-const notices = ref([
+const fallbackNotices: Notice[] = [
   { id: 'NT-2024-001', title: 'Q1 2024 Assessment Notice', property: 'Commercial Complex A', amount: 'N2,500,000', dueDate: 'Mar 31, 2024', status: 'Pending', type: 'Assessment' },
   { id: 'NT-2024-002', title: 'Property Valuation Update', property: 'Residential Estate B', amount: 'N1,800,000', dueDate: 'Feb 28, 2024', status: 'Responded', type: 'Valuation' },
   { id: 'NT-2024-003', title: 'Annual Compliance Review', property: 'Office Tower D', amount: 'N4,200,000', dueDate: 'Jun 30, 2024', status: 'Resolved', type: 'Compliance' },
   { id: 'NT-2024-004', title: 'Document Verification Request', property: 'Mixed Use Development C', amount: '-', dueDate: 'Feb 15, 2024', status: 'Pending', type: 'Documentation' },
-])
+]
+
+const notices = ref<Notice[]>(fallbackNotices)
 
 const filteredNotices = computed(() => notices.value.filter(n => {
   const matchesSearch = n.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || n.id.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -37,13 +53,35 @@ const paginatedNotices = computed(() => { const start = (currentPage.value - 1) 
 const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) currentPage.value = page }
 
 const showToast = (message: string) => { toast.value = { show: true, message }; setTimeout(() => { toast.value.show = false }, 3000) }
-const openViewModal = (n: any) => { selectedNotice.value = n; showViewModal.value = true }
-const openRespondModal = (n: any) => { selectedNotice.value = n; response.value = ''; showRespondModal.value = true }
-const submitResponse = () => {
-  const index = notices.value.findIndex(n => n.id === selectedNotice.value.id)
-  if (index !== -1) { notices.value[index].status = 'Responded' }
-  showRespondModal.value = false; showToast('Response submitted successfully')
+const openViewModal = (n: Notice) => { selectedNotice.value = n; showViewModal.value = true }
+const openRespondModal = (n: Notice) => { selectedNotice.value = n; response.value = n.response || ''; showRespondModal.value = true }
+const loadNotices = async () => {
+  isLoading.value = true
+  errorMessage.value = ''
+  try {
+    notices.value = await api.getNotices<Notice[]>()
+  } catch (error) {
+    errorMessage.value = error instanceof Error ? error.message : 'Unable to load notices'
+    notices.value = fallbackNotices
+  } finally {
+    isLoading.value = false
+  }
 }
+
+const submitResponse = async () => {
+  if (!selectedNotice.value) return
+  try {
+    const updated = await api.respondNotice<Notice>(selectedNotice.value.id, response.value)
+    const index = notices.value.findIndex(n => n.id === updated.id)
+    if (index !== -1) notices.value[index] = updated
+    showRespondModal.value = false
+    showToast('Response submitted successfully')
+  } catch (error) {
+    showToast(error instanceof Error ? error.message : 'Unable to submit response')
+  }
+}
+
+onMounted(loadNotices)
 </script>
 
 <template>
@@ -61,6 +99,8 @@ const submitResponse = () => {
             <input v-model="searchQuery" type="text" placeholder="Search notices..." class="input-field flex-1" />
             <select v-model="filterType" class="input-field w-48"><option value="all">All Types</option><option value="Assessment">Assessment</option><option value="Valuation">Valuation</option><option value="Compliance">Compliance</option><option value="Documentation">Documentation</option></select>
           </div>
+          <div v-if="isLoading" class="px-6 py-3 text-[12px] text-[#6b7280] border-b border-[#f3f4f6]">Loading notices...</div>
+          <div v-else-if="errorMessage" class="px-6 py-3 text-[12px] text-yellow-700 bg-yellow-50 border-b border-yellow-100">Showing demo notices because the backend did not respond.</div>
           <div class="overflow-x-auto">
             <table class="w-full">
               <thead><tr><th class="table-header">Notice ID</th><th class="table-header">Title</th><th class="table-header">Property</th><th class="table-header">Amount</th><th class="table-header">Due Date</th><th class="table-header">Type</th><th class="table-header">Status</th><th class="table-header">Actions</th></tr></thead>
@@ -70,6 +110,9 @@ const submitResponse = () => {
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] bg-[#f3f4f6] text-[#6b7280] rounded">{{ notice.type }}</span></td>
                   <td class="table-cell"><span class="px-2 py-0.5 text-[11px] font-medium rounded-full" :class="{'bg-yellow-50 text-yellow-700': notice.status === 'Pending', 'bg-blue-50 text-blue-700': notice.status === 'Responded', 'bg-green-50 text-green-700': notice.status === 'Resolved'}">{{ notice.status }}</span></td>
                   <td class="table-cell"><div class="flex gap-2"><button @click="openViewModal(notice)" class="px-3 py-1 text-[11px] bg-[#f3f4f6] text-[#374151] rounded hover:bg-[#e5e7eb]">View</button><button v-if="notice.status === 'Pending'" @click="openRespondModal(notice)" class="px-3 py-1 text-[11px] bg-[#2D5A27] text-white rounded hover:bg-[#6a0707]">Respond</button></div></td>
+                </tr>
+                <tr v-if="!isLoading && paginatedNotices.length === 0">
+                  <td colspan="8" class="px-6 py-8 text-center text-[12px] text-[#6b7280]">No notices found.</td>
                 </tr>
               </tbody>
             </table>

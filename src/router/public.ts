@@ -75,8 +75,7 @@ const publicRoutes = [
   },
   {
     path: '/taxpayer/payments',
-    name: 'taxpayer-payments',
-    component: () => import('@/views/dashboards/developer/Payments.vue'),
+    redirect: '/taxpayer/properties',
     meta: { access: 'taxpayer', requiresAuth: true },
   },
   {
