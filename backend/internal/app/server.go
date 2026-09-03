@@ -21,6 +21,7 @@ type Server struct {
 	staticDir string
 	logger    *slog.Logger
 	mux       *http.ServeMux
+	origins   []string
 }
 
 func New(st *store.Store, staticDir string, logger *slog.Logger) *Server {
@@ -29,13 +30,14 @@ func New(st *store.Store, staticDir string, logger *slog.Logger) *Server {
 		staticDir: staticDir,
 		logger:    logger,
 		mux:       http.NewServeMux(),
+		origins:   allowedOrigins(),
 	}
 	s.routes()
 	return s
 }
 
 func (s *Server) Handler() http.Handler {
-	return s.security(s.logging(s.mux))
+	return s.security(s.cors(s.logging(s.mux)))
 }
 
 func (s *Server) routes() {
@@ -256,6 +258,39 @@ func (s *Server) security(next http.Handler) http.Handler {
 	})
 }
 
+func (s *Server) cors(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		origin := r.Header.Get("Origin")
+		if origin != "" && s.originAllowed(origin) {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Vary", "Origin")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+			w.Header().Set("Access-Control-Max-Age", "600")
+		}
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func (s *Server) originAllowed(origin string) bool {
+	for _, allowed := range s.origins {
+		if allowed == "*" || allowed == origin {
+			return true
+		}
+		if strings.HasPrefix(allowed, "https://*.") {
+			suffix := strings.TrimPrefix(allowed, "https://*")
+			if strings.HasPrefix(origin, "https://") && strings.HasSuffix(origin, suffix) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func (s *Server) logging(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
@@ -332,4 +367,20 @@ func setContentType(w http.ResponseWriter, path string) {
 	if ct := mime.TypeByExtension(filepath.Ext(path)); ct != "" {
 		w.Header().Set("Content-Type", ct)
 	}
+}
+
+func allowedOrigins() []string {
+	value := os.Getenv("RERIT_ALLOWED_ORIGINS")
+	if value == "" {
+		value = "http://localhost:5173,http://localhost:5174,https://*.vercel.app"
+	}
+	parts := strings.Split(value, ",")
+	origins := make([]string, 0, len(parts))
+	for _, part := range parts {
+		part = strings.TrimSpace(part)
+		if part != "" {
+			origins = append(origins, part)
+		}
+	}
+	return origins
 }
