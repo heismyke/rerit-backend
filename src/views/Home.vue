@@ -12,6 +12,7 @@ const selectedRoleForLogin = ref<typeof roles[number] | null>(null)
 const email = ref('')
 const password = ref('')
 const showForgotPassword = ref(false)
+const isSigningIn = ref(false)
 
 const handleRoleSelect = (role: typeof roles[number]) => {
   selectedRoleForLogin.value = role
@@ -21,11 +22,14 @@ const handleRoleSelect = (role: typeof roles[number]) => {
 
 const handleLogin = async () => {
   if (!selectedRoleForLogin.value) return
+  isSigningIn.value = true
   try {
     await loginWithApi(email.value, password.value, selectedRoleForLogin.value)
   } catch {
     const { login } = useRoleStore()
     login(email.value, 'User')
+  } finally {
+    isSigningIn.value = false
   }
   showLoginModal.value = false
   router.push(getRouteByRoleId(selectedRoleForLogin.value.id))
@@ -141,7 +145,9 @@ const closeModal = () => {
                 >
                   Forgot Password?
                 </button>
-                <button @click="handleLogin" class="btn-primary w-full">Sign In</button>
+                <button @click="handleLogin" :disabled="isSigningIn" class="btn-primary w-full disabled:opacity-60">
+                  {{ isSigningIn ? 'Signing in...' : 'Sign In' }}
+                </button>
               </div>
             </template>
 

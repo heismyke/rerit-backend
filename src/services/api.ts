@@ -1,4 +1,5 @@
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
+const REQUEST_TIMEOUT_MS = 8000
 
 type LoginPayload = {
   email: string
@@ -7,13 +8,17 @@ type LoginPayload = {
 }
 
 const request = async <T>(path: string, options: RequestInit = {}): Promise<T> => {
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+
   const response = await fetch(`${API_BASE}${path}`, {
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
     },
+    signal: controller.signal,
     ...options,
-  })
+  }).finally(() => window.clearTimeout(timeout))
 
   if (!response.ok) {
     const body = await response.json().catch(() => ({ error: 'Request failed' }))
