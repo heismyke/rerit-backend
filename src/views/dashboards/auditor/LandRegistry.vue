@@ -21,6 +21,7 @@ const showAddModal = ref(false)
 const showViewModal = ref(false)
 const showEditModal = ref(false)
 const selectedRecord = ref<any>(null)
+const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
 const newRecord = ref({
   plotNo: '',
@@ -61,6 +62,13 @@ const goToPage = (page: number) => {
   }
 }
 
+const showToast = (message: string) => {
+  toast.value = { show: true, message }
+  setTimeout(() => {
+    toast.value.show = false
+  }, 3000)
+}
+
 const handleView = (record: any) => {
   selectedRecord.value = record
   showViewModal.value = true
@@ -82,6 +90,7 @@ const handleAddRecord = () => {
   })
   showAddModal.value = false
   newRecord.value = { plotNo: '', block: '', location: '', size: '', owner: '', titleType: 'C of O' }
+  showToast('Land registry record added')
 }
 
 const handleUpdateRecord = () => {
@@ -93,6 +102,7 @@ const handleUpdateRecord = () => {
     }
   }
   showEditModal.value = false
+  showToast('Land registry record updated')
 }
 
 const closeModal = () => {
@@ -192,6 +202,8 @@ const closeModal = () => {
         </div>
       </main>
     </div>
+
+    <Teleport to="body"><div v-if="toast.show" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50">{{ toast.message }}</div></Teleport>
   </div>
 
   <Teleport to="body">

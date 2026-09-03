@@ -15,11 +15,12 @@ const itemsPerPage = ref(5)
 const showEditModal = ref(false)
 const selectedFiling = ref<any>(null)
 const editFiling = ref<{ status: SuccessfulFiling['status'] }>({ status: 'Validated' })
+const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
 const { successfulFilings, loadAuditorCases, updateSuccessfulFiling } = useAuditorCasesStore()
 
 onMounted(() => {
-  loadAuditorCases().catch(() => undefined)
+  loadAuditorCases().catch(() => showToast('Using offline filing data'))
 })
 
 const filteredFilings = computed(() => successfulFilings.value.filter(f => {
@@ -36,6 +37,7 @@ const paginatedFilings = computed(() => {
   return filteredFilings.value.slice(start, start + itemsPerPage.value)
 })
 const goToPage = (page: number) => { if (page >= 1 && page <= totalPages.value) currentPage.value = page }
+const showToast = (message: string) => { toast.value = { show: true, message }; setTimeout(() => { toast.value.show = false }, 3000) }
 
 const openEditModal = (f: any) => {
   selectedFiling.value = f
@@ -52,6 +54,7 @@ const handleUpdateFiling = async () => {
     } catch {
       successfulFilings.value[index] = updated
     }
+    showToast('Filing updated')
   }
   showEditModal.value = false
 }
@@ -109,6 +112,9 @@ const handleUpdateFiling = async () => {
                     <button @click="openEditModal(filing)" class="px-3 py-1 text-[11px] bg-green-50 text-green-700 rounded hover:bg-green-100">Edit</button>
                   </td>
                 </tr>
+                <tr v-if="paginatedFilings.length === 0">
+                  <td colspan="7" class="px-6 py-8 text-center text-[12px] text-[#6b7280]">No successful filings found.</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -123,6 +129,8 @@ const handleUpdateFiling = async () => {
         </div>
       </main>
     </div>
+
+    <Teleport to="body"><div v-if="toast.show" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50">{{ toast.message }}</div></Teleport>
 
     <Teleport to="body">
       <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">

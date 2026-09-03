@@ -13,6 +13,7 @@ const handleLogout = () => {
 }
 
 const activeTab = ref('profile')
+const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
 const profile = ref({
   name: 'John Smith',
@@ -24,6 +25,13 @@ const profile = ref({
 
 const notifications = ref({ email: true, sms: false, push: true })
 const security = ref({ twoFactor: false, sessionTimeout: '30' })
+
+const showToast = (message: string) => {
+  toast.value = { show: true, message }
+  setTimeout(() => {
+    toast.value.show = false
+  }, 3000)
+}
 </script>
 
 <template>
@@ -57,7 +65,7 @@ const security = ref({ twoFactor: false, sessionTimeout: '30' })
             <div v-if="activeTab === 'profile'" class="space-y-6">
               <div class="flex items-center gap-5 pb-6 border-b border-[#e5e7eb]">
                 <div class="w-16 h-16 bg-[#2D5A27] rounded-full flex items-center justify-center text-xl font-bold text-white">JS</div>
-                <button class="btn-secondary text-[11px]">Change Photo</button>
+                <button @click="showToast('Photo update saved for demo')" class="btn-secondary text-[11px]">Change Photo</button>
               </div>
               <div class="grid grid-cols-2 gap-5">
                 <div><label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Full Name</label><input v-model="profile.name" type="text" class="input-field" /></div>
@@ -65,45 +73,51 @@ const security = ref({ twoFactor: false, sessionTimeout: '30' })
                 <div><label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Employee ID</label><input v-model="profile.employeeId" type="text" disabled class="input-field bg-[#f9fafb]" /></div>
                 <div><label class="block text-[11px] font-medium text-[#6b7280] mb-1.5">Department</label><input v-model="profile.department" type="text" class="input-field" /></div>
               </div>
-              <div class="flex justify-end"><button class="btn-primary text-[11px]">Save Changes</button></div>
+              <div class="flex justify-end"><button @click="showToast('Auditor profile saved')" class="btn-primary text-[11px]">Save Changes</button></div>
             </div>
 
             <div v-if="activeTab === 'notifications'" class="space-y-0">
               <div class="flex items-center justify-between py-4 border-b border-[#e5e7eb]">
                 <div><p class="text-sm font-medium text-[#1f2937]">Email Notifications</p><p class="text-xs text-[#9ca3af]">Receive audit updates via email</p></div>
-                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.email" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
+                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.email" @change="showToast('Notification settings updated')" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
               </div>
               <div class="flex items-center justify-between py-4 border-b border-[#e5e7eb]">
                 <div><p class="text-sm font-medium text-[#1f2937]">SMS Notifications</p><p class="text-xs text-[#9ca3af]">Urgent alerts via SMS</p></div>
-                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.sms" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
+                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.sms" @change="showToast('Notification settings updated')" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
               </div>
               <div class="flex items-center justify-between py-4">
                 <div><p class="text-sm font-medium text-[#1f2937]">Push Notifications</p><p class="text-xs text-[#9ca3af]">Real-time browser alerts</p></div>
-                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.push" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
+                <label class="relative inline-flex items-center cursor-pointer"><input v-model="notifications.push" @change="showToast('Notification settings updated')" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
               </div>
             </div>
 
             <div v-if="activeTab === 'security'" class="space-y-6">
               <div class="flex items-center justify-between py-4 border-b border-[#e5e7eb]">
                 <div><p class="text-sm font-medium text-[#1f2937]">Two-Factor Authentication</p><p class="text-xs text-[#9ca3af]">Add extra security to your account</p></div>
-                <label class="relative inline-flex items-center cursor-pointer"><input v-model="security.twoFactor" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
+                <label class="relative inline-flex items-center cursor-pointer"><input v-model="security.twoFactor" @change="showToast('Security settings updated')" type="checkbox" class="sr-only peer" /><div class="w-10 h-5 bg-[#d1d5db] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-[#d1d5db] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2D5A27]"></div></label>
               </div>
               <div class="py-4 border-b border-[#e5e7eb]">
                 <label class="block text-[11px] font-medium text-[#6b7280] mb-2">Session Timeout</label>
-                <select v-model="security.sessionTimeout" class="input-field w-48">
+                <select v-model="security.sessionTimeout" @change="showToast('Session timeout updated')" class="input-field w-48">
                   <option value="15">15 minutes</option>
                   <option value="30">30 minutes</option>
                   <option value="60">1 hour</option>
                 </select>
               </div>
               <div class="flex gap-3">
-                <button class="btn-secondary text-[11px]">Change Password</button>
-                <button class="btn-secondary text-[11px]">View Login History</button>
+                <button @click="showToast('Password change request opened')" class="btn-secondary text-[11px]">Change Password</button>
+                <button @click="showToast('No unusual login activity found')" class="btn-secondary text-[11px]">View Login History</button>
               </div>
             </div>
           </div>
         </div>
       </main>
     </div>
+
+    <Teleport to="body">
+      <div v-if="toast.show" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50">
+        {{ toast.message }}
+      </div>
+    </Teleport>
   </div>
 </template>
