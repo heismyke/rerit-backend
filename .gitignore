@@ -11,8 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
-rerit-server
-rerit-server-healthcheck
+/rerit-server
+/rerit-server-healthcheck
 
 # Editor directories and files
 .vscode/*
