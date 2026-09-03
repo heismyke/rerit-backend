@@ -1,0 +1,12 @@
+.git
+node_modules
+dist
+dist-ssr
+datawarehouse
+*.log
+*.local
+.DS_Store
+rerit-server
+rerit-server-healthcheck
+session-*.md
+tsconfig*.tsbuildinfo

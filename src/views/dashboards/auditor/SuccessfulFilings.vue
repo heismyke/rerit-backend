@@ -2,7 +2,7 @@
 import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuditorCasesStore, type SuccessfulFiling } from '@/stores/auditorCasesStore'
 
 const { selectedRole, user, logout } = useRoleStore()
@@ -16,7 +16,11 @@ const showEditModal = ref(false)
 const selectedFiling = ref<any>(null)
 const editFiling = ref<{ status: SuccessfulFiling['status'] }>({ status: 'Validated' })
 
-const { successfulFilings } = useAuditorCasesStore()
+const { successfulFilings, loadAuditorCases, updateSuccessfulFiling } = useAuditorCasesStore()
+
+onMounted(() => {
+  loadAuditorCases().catch(() => undefined)
+})
 
 const filteredFilings = computed(() => successfulFilings.value.filter(f => {
   const q = searchQuery.value.toLowerCase()
@@ -39,9 +43,16 @@ const openEditModal = (f: any) => {
   showEditModal.value = true
 }
 
-const handleUpdateFiling = () => {
+const handleUpdateFiling = async () => {
   const index = successfulFilings.value.findIndex(f => f.id === selectedFiling.value.id)
-  if (index !== -1) successfulFilings.value[index] = { ...successfulFilings.value[index], ...editFiling.value }
+  if (index !== -1) {
+    const updated = { ...successfulFilings.value[index], ...editFiling.value }
+    try {
+      await updateSuccessfulFiling(updated.id, updated)
+    } catch {
+      successfulFilings.value[index] = updated
+    }
+  }
   showEditModal.value = false
 }
 </script>

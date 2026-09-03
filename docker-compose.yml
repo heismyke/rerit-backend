@@ -1,0 +1,24 @@
+services:
+  rerit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rerit
+    restart: unless-stopped
+    environment:
+      RERIT_ADDR: ":8095"
+      RERIT_DATA_PATH: "/data/rerit.json"
+      RERIT_STATIC_DIR: "/app/dist"
+    ports:
+      - "8095:8095"
+    volumes:
+      - rerit-data:/data
+    healthcheck:
+      test: ["CMD", "/app/rerit-server-healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  rerit-data:

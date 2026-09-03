@@ -2,7 +2,7 @@
 import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuditorCasesStore, type FlaggedCase } from '@/stores/auditorCasesStore'
 
 const { selectedRole, user, logout } = useRoleStore()
@@ -22,7 +22,11 @@ const selectedFlag = ref<any>(null)
 const aiInsights = ref('')
 const toast = ref<{ show: boolean; message: string }>({ show: false, message: '' })
 
-const { flaggedCases } = useAuditorCasesStore()
+const { flaggedCases, loadAuditorCases, updateFlaggedCase, sendFlaggedResult } = useAuditorCasesStore()
+
+onMounted(() => {
+  loadAuditorCases().catch(() => showToast('Using offline flagged case data'))
+})
 
 const filteredFlags = computed(() => flaggedCases.value.filter(f => {
   const matchesSearch = f.id.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -62,25 +66,35 @@ const openResultModal = (f: any) => {
 const editFlag = ref<{ priority: FlaggedCase['priority']; status: FlaggedCase['status'] }>({ priority: 'Medium', status: 'Pending Review' })
 const resultForm = ref<{ status: NonNullable<FlaggedCase['resultStatus']>; message: string }>({ status: 'Compliant', message: '' })
 
-const handleUpdateFlag = () => {
+const handleUpdateFlag = async () => {
   const index = flaggedCases.value.findIndex(f => f.id === selectedFlag.value.id)
   if (index !== -1) {
-    flaggedCases.value[index] = { ...flaggedCases.value[index], ...editFlag.value }
+    const updated = { ...flaggedCases.value[index], ...editFlag.value }
+    try {
+      await updateFlaggedCase(updated.id, updated)
+    } catch {
+      flaggedCases.value[index] = updated
+    }
     showToast('Flag updated')
   }
   showEditModal.value = false
 }
 
-const handleSendResult = () => {
+const handleSendResult = async () => {
   const index = flaggedCases.value.findIndex(f => f.id === selectedFlag.value.id)
   if (index === -1) return
   const resultStatus = resultForm.value.status
-  flaggedCases.value[index] = {
+  const updated = {
     ...flaggedCases.value[index],
     resultStatus,
     resultNotes: resultForm.value.message,
     resultSentAt: new Date().toISOString().split('T')[0],
     status: resultStatus === 'Compliant' ? 'Resolved' : flaggedCases.value[index].status,
+  }
+  try {
+    await sendFlaggedResult(updated.id, resultStatus, resultForm.value.message)
+  } catch {
+    flaggedCases.value[index] = updated
   }
   showResultModal.value = false
   showToast('Result sent to taxpayer')

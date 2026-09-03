@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { api } from '@/services/api'
 
 export type AuditCase = {
   id: string
@@ -58,6 +59,27 @@ const successfulFilings = ref<SuccessfulFiling[]>([
   { id: 'SUC-2024-003', filingId: 'FCT-IRS-00003', property: '15 Admiralty Way, Lekki', taxpayer: 'Chidi Okafor', validatedAt: '2024-01-19', status: 'Validated' },
 ])
 
+type AuditorSnapshot = {
+  auditCases: AuditCase[]
+  flaggedCases: FlaggedCase[]
+  successfulFilings: SuccessfulFiling[]
+}
+
+const isLoaded = ref(false)
+
+const loadAuditorCases = async () => {
+  if (isLoaded.value) return
+  const [remoteAuditCases, remoteFlaggedCases, remoteSuccessfulFilings] = await Promise.all([
+    api.getAuditCases<AuditCase[]>(),
+    api.getFlaggedCases<FlaggedCase[]>(),
+    api.getSuccessfulFilings<SuccessfulFiling[]>(),
+  ])
+  auditCases.value = remoteAuditCases
+  flaggedCases.value = remoteFlaggedCases
+  successfulFilings.value = remoteSuccessfulFilings
+  isLoaded.value = true
+}
+
 const buildFilingId = (id: string) => `FCT-IRS-${id.replace(/\D/g, '').padStart(5, '0')}`
 
 const moveAuditToSuccessful = (c: AuditCase) => {
@@ -87,12 +109,66 @@ const moveAuditToFlagged = (c: AuditCase) => {
   })
 }
 
+const createAuditCase = async (draft: Partial<AuditCase>) => {
+  const created = await api.createAuditCase<AuditCase>(draft)
+  auditCases.value.unshift(created)
+  return created
+}
+
+const updateAuditCase = async (id: string, patch: AuditCase) => {
+  const updated = await api.updateAuditCase<AuditCase>(id, patch)
+  const index = auditCases.value.findIndex(c => c.id === id)
+  if (index !== -1) auditCases.value[index] = updated
+  return updated
+}
+
+const deleteAuditCase = async (id: string) => {
+  await api.deleteAuditCase(id)
+  auditCases.value = auditCases.value.filter(c => c.id !== id)
+}
+
+const sendAuditResult = async (id: string, status: NonNullable<AuditCase['resultStatus']>, notes: string) => {
+  const snapshot = await api.sendAuditResult<AuditorSnapshot>(id, { status, notes })
+  auditCases.value = snapshot.auditCases
+  flaggedCases.value = snapshot.flaggedCases
+  successfulFilings.value = snapshot.successfulFilings
+}
+
+const updateFlaggedCase = async (id: string, patch: FlaggedCase) => {
+  const updated = await api.updateFlaggedCase<FlaggedCase>(id, patch)
+  const index = flaggedCases.value.findIndex(f => f.id === id)
+  if (index !== -1) flaggedCases.value[index] = updated
+  return updated
+}
+
+const sendFlaggedResult = async (id: string, status: NonNullable<FlaggedCase['resultStatus']>, notes: string) => {
+  const updated = await api.sendFlaggedResult<FlaggedCase>(id, { status, notes })
+  const index = flaggedCases.value.findIndex(f => f.id === id)
+  if (index !== -1) flaggedCases.value[index] = updated
+  return updated
+}
+
+const updateSuccessfulFiling = async (id: string, patch: SuccessfulFiling) => {
+  const updated = await api.updateSuccessfulFiling<SuccessfulFiling>(id, patch)
+  const index = successfulFilings.value.findIndex(f => f.id === id)
+  if (index !== -1) successfulFilings.value[index] = updated
+  return updated
+}
+
 export const useAuditorCasesStore = () => {
   return {
     auditCases,
     flaggedCases,
     successfulFilings,
+    loadAuditorCases,
     moveAuditToSuccessful,
     moveAuditToFlagged,
+    createAuditCase,
+    updateAuditCase,
+    deleteAuditCase,
+    sendAuditResult,
+    updateFlaggedCase,
+    sendFlaggedResult,
+    updateSuccessfulFiling,
   }
 }

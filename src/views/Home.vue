@@ -5,7 +5,7 @@ import { roles, getRouteByRoleId } from '@/data'
 import { useRoleStore } from '@/stores'
 
 const router = useRouter()
-const { setRole } = useRoleStore()
+const { setRole, loginWithApi } = useRoleStore()
 
 const showLoginModal = ref(false)
 const selectedRoleForLogin = ref<typeof roles[number] | null>(null)
@@ -19,11 +19,16 @@ const handleRoleSelect = (role: typeof roles[number]) => {
   showLoginModal.value = true
 }
 
-const handleLogin = () => {
-  const { login } = useRoleStore()
-  login(email.value, 'User')
+const handleLogin = async () => {
+  if (!selectedRoleForLogin.value) return
+  try {
+    await loginWithApi(email.value, password.value, selectedRoleForLogin.value)
+  } catch {
+    const { login } = useRoleStore()
+    login(email.value, 'User')
+  }
   showLoginModal.value = false
-  router.push(getRouteByRoleId(selectedRoleForLogin.value!.id))
+  router.push(getRouteByRoleId(selectedRoleForLogin.value.id))
 }
 
 const closeModal = () => {

@@ -2,7 +2,7 @@
 import { useRoleStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Sidebar.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuditorCasesStore, type AuditCase } from '@/stores/auditorCasesStore'
 
 const { selectedRole, user, logout } = useRoleStore()
@@ -30,7 +30,11 @@ type CaseDraft = {
 const newCase = ref<CaseDraft>({ property: '', owner: '', priority: 'Medium', status: 'Pending', due: '' })
 const editCase = ref<CaseDraft>({ property: '', owner: '', priority: 'Medium', status: 'Pending', due: '' })
 
-const { auditCases, moveAuditToSuccessful, moveAuditToFlagged } = useAuditorCasesStore()
+const { auditCases, createAuditCase, updateAuditCase, deleteAuditCase, sendAuditResult, loadAuditorCases } = useAuditorCasesStore()
+
+onMounted(() => {
+  loadAuditorCases().catch(() => showToast('Using offline case data'))
+})
 
 const filteredCases = computed(() => auditCases.value.filter(c => {
   const matchesSearch = c.id.toLowerCase().includes(searchQuery.value.toLowerCase()) || c.property.toLowerCase().includes(searchQuery.value.toLowerCase()) || c.owner.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -46,40 +50,51 @@ const showToast = (message: string) => { toast.value = { show: true, message }; 
 const openViewModal = (c: any) => { selectedCase.value = c; showViewModal.value = true }
 const openEditModal = (c: any) => { selectedCase.value = c; editCase.value = { ...c }; showEditModal.value = true }
 
-const handleAddCase = () => {
-  const newId = 'AUD-2024-' + String(auditCases.value.length + 1).padStart(3, '0')
-  auditCases.value.unshift({
-    id: newId,
-    auditor: 'Current User',
-    started: new Date().toISOString().split('T')[0],
-    ...newCase.value,
-    resultStatus: null,
-    resultNotes: '',
-    resultSentAt: null
-  })
-  showAddModal.value = false; newCase.value = { property: '', owner: '', priority: 'Medium', status: 'Pending', due: '' }; showToast('Case created successfully')
+const handleAddCase = async () => {
+  try {
+    await createAuditCase(newCase.value)
+    showToast('Case created successfully')
+  } catch {
+    const newId = 'AUD-2026-' + String(auditCases.value.length + 1).padStart(3, '0')
+    auditCases.value.unshift({
+      id: newId,
+      auditor: 'Current User',
+      started: new Date().toISOString().split('T')[0],
+      ...newCase.value,
+      resultStatus: null,
+      resultNotes: '',
+      resultSentAt: null
+    })
+    showToast('Case created locally')
+  }
+  showAddModal.value = false
+  newCase.value = { property: '', owner: '', priority: 'Medium', status: 'Pending', due: '' }
 }
 
-const handleUpdateCase = () => {
+const handleUpdateCase = async () => {
   const index = auditCases.value.findIndex(c => c.id === selectedCase.value.id)
   if (index !== -1) {
     const updated = { ...auditCases.value[index], ...editCase.value }
-    auditCases.value[index] = updated
-    if (updated.status === 'Completed') {
-      moveAuditToSuccessful(updated)
-      auditCases.value = auditCases.value.filter(c => c.id !== updated.id)
-    }
-    if (updated.status === 'Flagged') {
-      moveAuditToFlagged(updated)
-      auditCases.value = auditCases.value.filter(c => c.id !== updated.id)
+    try {
+      if (updated.status === 'Completed' || updated.status === 'Flagged') {
+        await sendAuditResult(updated.id, updated.status === 'Completed' ? 'Compliant' : 'Non-Compliant', updated.resultNotes)
+      } else {
+        await updateAuditCase(updated.id, updated)
+      }
+    } catch {
+      auditCases.value[index] = updated
     }
     showToast('Case updated')
   }
   showEditModal.value = false
 }
 
-const handleDeleteCase = () => {
-  auditCases.value = auditCases.value.filter(c => c.id !== selectedCase.value.id)
+const handleDeleteCase = async () => {
+  try {
+    await deleteAuditCase(selectedCase.value.id)
+  } catch {
+    auditCases.value = auditCases.value.filter(c => c.id !== selectedCase.value.id)
+  }
   showEditModal.value = false; showToast('Case deleted')
 }
 </script>

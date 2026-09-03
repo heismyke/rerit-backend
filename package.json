@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "backend:dev": "cd backend && go run ./cmd/rerit-server",
+    "backend:build": "cd backend && go build -o ../rerit-server ./cmd/rerit-server",
+    "build:prod": "npm run build && cd backend && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags='-s -w' -o ../rerit-server ./cmd/rerit-server && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags='-s -w' -o ../rerit-server-healthcheck ./cmd/rerit-server-healthcheck"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
